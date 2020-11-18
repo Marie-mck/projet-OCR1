@@ -1,0 +1,506 @@
+body {
+    font-family: "calibri";
+    margin: 0;
+    padding: 0;
+    background-color: rgb(239, 240, 242);
+}
+#page {
+    margin: 0;
+    padding: 0;  
+}
+
+/* ------------------ header --------------------------------- */
+header {
+    background-color: white;
+	display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: auto;
+    position: fixed;
+    z-index: 9999;
+	margin-bottom: 15px;
+	padding-top: 0;
+}
+#logo img {
+	width: 30px;
+    height:30px;
+    border: 1px solid black;
+}
+#logo {
+    align-self: center;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 7%;
+}
+.myName {
+    font-size: 25px;
+    color: #29414d;
+    margin-right: 25px;
+    font-weight: bold;
+}
+.menu {
+	padding-right: 1%;
+}
+nav ul {
+    list-style-type: none;
+    display: flex;
+}
+nav li {
+    padding: 3px 15px;
+}
+nav a {
+    font-size:18px;
+    color: #29414d;
+    text-decoration: none;
+}
+nav a:hover {
+    background-color: #A9A9A9;
+    padding: 3%;
+}
+#connexion_Btn, #deconnexion_Btn {
+    background-color: #A9A9A9;
+    padding: 5px 12px;
+    border-radius: 5%;
+    font-size: 17px;
+    margin-right: 12px;
+}
+.menu input.burger /*Menu hamburger*/
+{
+	display: none;
+}
+
+/* ------------------chapters--------------------- */
+
+#introduction {
+    background-color: rgb(239, 240, 242);
+	text-align: center;
+	padding-top: 7%;
+}
+.image {
+    position: relative;
+    width: 80%;
+    height:450px;
+    padding-top: 7%;
+}
+.text {
+    position: absolute;
+    font-size: 30px;
+    text-align: center;
+    padding-top: 18%;
+    left: 0;
+    width: 100%;
+    color: black;
+}
+.text2 {
+	text-align: center;
+	border:3px solid #435962;
+	font-size: 20px;
+	width: 80%;
+	margin: 3% 0% 0% 10%;
+	height: 100px;
+}
+.presentation {
+	margin: 0;
+}
+#last_chapter {
+    margin: auto;
+    width: 75%;
+}
+.chapter_1, .chapter_2, .chapter_3 {
+	width: 80%;
+	margin: 0;
+}
+.last_chapter_1, .last_chapter_2, .last_chapter_3 {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 2%;
+	width: 100%
+}
+.last_chapter_1_image, .last_chapter_2_image,.last_chapter_3_image {
+	margin: 0;
+}
+.chapter_title, .chapter_text, .chapter_readmore {
+    border: 1px solid #435962;
+    padding-left: 2%;
+}
+.title_last_chapter {
+    text-align: center;
+    font-size: 35px;
+}
+.chapter_title {
+    background-color: #435962;
+    color: white;
+    font-size: 18px;
+}
+.chapter_text {
+    background-color: white;
+    height: 173px;
+}
+.chapter_readmore {
+    background-color: #D3D3D3;
+}
+.image_chapter {
+	height:300px;
+}
+
+
+/*----------------------- page à propos -----------------*/
+#author_pres {
+    border:3px solid rgb(92, 173, 211);
+    text-align: center;
+    width: 80%;
+    margin: 3% 10%;
+}
+
+/*----------------------- footer -----------------*/
+#foot {
+	position: absolute;
+	width: 100%;
+	height: 100px;
+	background-color: white;
+}
+
+/*----------------------- page de connexion -----------------*/
+form {
+	display: flex;
+	flex-direction: column;
+}
+#connexion {
+    border:3px solid rgb(92, 173, 211);
+    width: 50%;
+    margin: 2% 10%;
+}
+form {
+    width: 40%;
+    margin: 3% 10%;
+}
+#identifiant, #password {
+    margin-bottom: 3%;
+}
+#connexion_Open {
+	width: 130px;
+	height: 32px;
+	margin-left: 20px;
+	color: white;
+	background-color: #435962;
+	border:none;
+	border-radius: 3px;
+    box-shadow: 0px 2px #29414d;
+    font-size: 15px;
+}
+#connexion_Open:hover {
+    background-color: #49839f;
+    border-bottom: 2px solid rgb(70, 140, 171);
+    font-size: 18px;
+}
+.identifiant, .password {
+    font-size: 18px;
+}
+
+
+
+	@media all and (min-width: 1024px) and (max-width: 1124px)/*ecran tablette*/
+	{
+		.text
+		{
+		   padding-top:6%;
+		   left: 7%;
+		   width: 70%;
+		   font-size: 20px;
+		}
+
+	}
+	@media all and (min-width: 769px) and (max-width: 1024px)/*ecran tablette*/
+	{
+		.text
+		{
+		   padding-top:2%;
+		   left: 3%;
+		   width: 50%;
+		   font-size: 25px;
+		   margin: 0px auto;
+		}
+		#carrousel .prev, #carrousel .next, .bar, .fa-chevron-left, .fa-chevron-right
+		{
+			display: none;
+		}
+		.web, h1, .accueil
+		{
+			font-size: 25px;
+			margin:0;
+		}
+		.services
+		{
+			display: flex;
+			flex-direction: column;
+		}
+		.site_1 img /*2nd section-Nos projets - portfolio d'images*/
+		{
+			width: 100%;
+			margin: 0;
+		}
+		figure
+		{
+			width: 28%;
+		}
+		.fa-eye
+		{
+		 font-size: 12px;
+		 padding: 11px;
+		}
+		h4, p, .presentation
+		{
+			font-size: 15px;
+		}
+		footer
+		{
+
+		  width: 100%;
+   		  display: flex;
+  		  flex-direction: column-reverse;
+		}
+		.container_3
+		{
+		  width: auto;
+		  margin: 0px 0px auto;
+		  position: static;
+		  right: 0;
+		}
+		#contact
+		{
+			padding-top: 100px;
+		}
+		.pied
+		{
+		  position: relative;
+		  width: auto;
+		  margin: 0px 0px auto;
+		}
+		#overlay
+		{
+			height: 100%;
+		}
+		#message
+		{
+			width: auto;
+		}
+	}
+
+	@media all and (max-width: 768px) /*ecran smart*/
+	{
+		header
+		{
+			padding: 10px 0px 10px 0px;
+			display: block;
+			height: 40px;
+		}
+		#logo img
+		{
+			width: 170px;
+			height: 42px;
+			padding-left: 25px;
+		}
+		nav ul
+		{
+		  display: block;
+		  line-height:2.2;
+		  width: 90%;
+		  padding: 0px 20px;
+		}
+		.menu nav
+		{
+		  background-color: white;
+		  overflow: hidden; /*cache le menu qd pas ouvert*/
+		  height:0;
+		 }
+		 nav li
+		 {
+		 	padding: 2px 40px;
+		 }
+	/*Menu buger*/
+		.menu input.burger
+		{
+			display: block;
+			vertical-align:text-bottom;
+		}
+		.menu .burger
+		{
+		  -webkit-appearance:none; /*apparence du menu */
+		  cursor:pointer;
+		  font-size:26px;
+		  line-height:40px;
+		  position:absolute;
+		  top:6px;
+		  right:20px;
+		}
+		.menu .burger:before
+		{
+		  content:'\f0c9';
+		  font-weight: 900;
+		  font-family: "Font Awesome 5 Free";
+		}
+		.menu .burger:checked:before
+		{
+		  content:'\f00d';
+		  font-weight: 900;
+		  font-family: "Font Awesome 5 Free";
+		}
+		.menu .burger:checked + nav
+		{
+		  height:calc(28vh - 60px);
+		}
+
+/* ------------------- bannière ------------------*/
+		#carrousel /* Bannière */
+		{
+		    height:250px;
+		    background-image: url(images/slider/cta2-bg.jpg);
+		    width: 100%;
+		    margin: auto;
+		    display: flex;
+		    flex-direction: column;
+		}
+		#carrousel img, #carrousel .prev, #carrousel .next, .bar, .fa-chevron-left, .fa-chevron-right
+		{
+			display: none;
+		}
+		.text
+		{
+		   padding-top:2%;
+		   left: 0;
+		   text-align: center;
+		   width: 100%
+		}
+		.web, .text, h1 /*Bannière titre*/
+		{
+			font-size: 25px;
+			line-height: 28px;
+		}
+		.explication, .info, .para/*Bannière paragraphe*/
+		{
+			font-size: 14px;
+			margin-bottom: 15px;
+		}
+		.info
+		{
+			padding: 10px 12px;
+			position: initial;
+		}
+		
+	/*-----------1ere et 2nd section-----------------*/
+		.fa-circle /*1ere et 2nd section*/
+		{
+			box-shadow: 0px 0px 6px 3px white;
+		}
+		.box:before /*1ere et 2nd section*/
+		{
+			width: 25px;
+			margin-left: -32px;
+		}
+		.box:after /*1ere et 2nd section*/
+		{
+			width: 25px;
+			margin-left: 5px;
+		}
+		.services
+		{
+			display: flex;
+			flex-direction: column;
+		}
+		.service
+		{
+			font-size: 12px;
+		}
+		.icone_2 i
+		{
+			font-size: 17px;
+		}
+		.icone_2 i:after
+		{
+		    left: 150%; /* deplacer à gauche par rapport au cercle*/
+		    margin-top: -18px;/* deplacer vers le haut */
+		   	font-size: 8px; /* taille du rond */
+		 	border: 6px solid white; /* adds a gap to the left and right */
+		 }
+		.conteneur_3 .icone_2, .conteneur_1 .icone_2, .conteneur_2 .icone_2
+		{
+			width: 35px;
+			height: 35px;
+			padding:17px 0px 0px 18px;
+			margin-top: 20px;
+		}
+		p, h4, .presentation
+		{
+			font-size: 17px;
+			margin: 0;
+		}
+		.site
+		{
+			margin: 0px 30px auto;
+		}
+		.texte
+		{
+			font-size: 11px;
+			padding-left: 85px;
+		}
+		#projets /*2nd section-Nos projets*/
+		{
+		   padding-top: 10px;
+		}
+		.projet a /*2nd section-Nos projets - icones navigation*/
+		{
+			font-size: 11px;
+		}
+		.site_1 img /*2nd section-Nos projets - portfolio d'images*/
+		{
+			width: 100%;
+			margin: 0;
+		}
+		h4, .presentation
+		{
+			padding: 0px 0px 10px 10px;
+		}
+		figure {
+		    padding: 0px 0px 10px 0px;
+		    width: 80%;
+		}
+		figcaption
+		{
+		  width: 100%;
+		  margin: 10px 0px 11px 0px;
+		  line-height: 15px;
+		}
+		.fa-eye
+		{
+		  margin-left: 80%;
+		}
+		footer
+		{
+		  width: 100%;
+   		  display: flex;
+  		  flex-direction: column-reverse;
+		}
+		.container_3
+		{
+		  width: auto;
+		  margin: 0px 0px auto;
+		  position: static;
+		  right: 0;
+		}
+		.pied
+		{
+		  position: relative;
+		  width: auto;
+		  margin: 0px 0px auto;
+		}
+		#overlay
+		{
+			height: 100%;
+		}
+		#message
+		{
+			height: 100Px;
+			width: auto;
+		}
+}
