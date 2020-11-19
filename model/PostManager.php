@@ -4,7 +4,7 @@
 
 //use tpnews5a\model\Manager;
 
-require_once 'model/Manager.php';
+require 'model/Manager.php';
 require 'News.php';
 
 class PostManager extends Manager {
