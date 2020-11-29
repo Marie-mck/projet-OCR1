@@ -25,20 +25,27 @@ class UserManager extends Manager {
     }
 
     public function checkUser($pseudo, $motDePasse) {
+        var_dump($pseudo, $motDePasse);
         $db = $this->dbConnect();
         //$q = $db->prepare('SELECT id  FROM user WHERE pseudo = ? && motDePasse = ?');
-        $q = $db->prepare('SELECT id, pseudo, motDePasse  FROM user WHERE pseudo = ? && motDePasse = ?');
-        $q = $q->execute(array($pseudo, $motDePasse));
-        $userExist =  $q->rowCount();//nbr de rangée qui existe avec les informations demandées
-        if($userExist == 1) {
-            $user = $q->fetch();
-            $_SESSION['id'] = $user['id'];
-            $_SESSION['pseudo'] = $user['pseudo'];
-            $_SESSION['motDePasse'] = $user['motDePasse'];
+        $q = $db->prepare('SELECT id, pseudo, motDePasse  FROM user WHERE pseudo = ? AND motDePasse = ?');
+        if($q->execute(array($pseudo, $motDePasse)) == true) {
+            
+            $userExist = $q->rowCount();//nbr de rangée qui existe avec les informations demandées -> bool dc fct pas
+
+            if($userExist == 1) {
+                $user = $q->fetch();
+                $_SESSION['id'] = $user['id'];
+                $_SESSION['pseudo'] = $user['pseudo'];
+                $_SESSION['motDePasse'] = $user['motDePasse'];
+            }
+            else {
+                echo "pas ok";
+            }
+        } else {
         }
-        else {
-            echo "pas ok";
-        }
+        var_dump($q);
+        
     }
 
     public function addUser($pseudo, $email, $motDePasse) {
@@ -51,12 +58,11 @@ class UserManager extends Manager {
         return $userAjouts;
     }
     
-    public function getUser() {
+    public function getUser($pseudo) {
         $db = $this->dbConnect();
-        $q = $db->prepare('SELECT id, pseudo, email, motDePasse, dateRecord FROM user WHERE id = :id');
-        $q->execute();
+        $q = $db->prepare('SELECT id, pseudo, email, motDePasse, dateRecord FROM user WHERE pseudo = :pseudo');
         //$q->execute([':id' =>$id]); // On exécute la requête
-        //$q->execute(array('pseudo' => $pseudo));
+        $q->execute(array(':pseudo' => $pseudo));
         // On stocke le résultat dans un tableau associatif : $news = $q->fetch();
         $user = $q->fetch();
         return $user;

@@ -6,7 +6,6 @@ class ConnexionController {
     protected $userManager;
 
     public function __construct() {
-        session_start();
         $this->userManager = new UserManager();
     }
 
@@ -85,33 +84,20 @@ class ConnexionController {
     public function connexion($pseudo, $motDePasse) {
         echo 'ok';
         if(isset($_POST['connexion']) && isset($_POST['pseudo']) && isset($_POST['motDePasse'])) {
-            /*if (session_status() === PHP_SESSION_NONE) {
-                session_start();
-                $_SESSION['connecte'] = 1;
-                echo 'est connecté';
-            */
-            $getUser = $this->userManager->checkUser($pseudo, $motDePasse);
-            $vue = new Vue("Connexion");
-            $vue->generer(array('getUser' => $getUser));
-            
-            $pseudo = $this->userManager->checkUser($pseudo);
-            $pass_hache = $this->userManager->checkUser($motDePasse);
-            $passHache = password_verify($_POST['motDePasse'], $pass_hache);
-
-            if(!empty($_POST['pseudo']) && !empty($_POST['motDePasse'])) {
-                echo 'ok';
-                if(($_POST['motDePasse'] == $passHache) && ($_POST['pseudo'] == $pseudo)) {
-                    session_start();
-                    $_SESSION['pseudo'] = $pseudo;
-                    header('Location: index.php');
-                    echo 'ok connection';
-                } else {
-                    echo 'le mot de passe ou le pseudo est invalide';
-                }
-            } else {
-                echo 'tous les champs doivent être connectés';
+            //$pass_hache = password_hash($_POST['motDePasse'], PASSWORD_DEFAULT);
+            $user = $this->userManager->getUser($_POST['pseudo']);
+            if(!empty($user)) {
+                var_dump($user);
+                $passHache = password_verify($_POST['motDePasse'], $user['motDePasse']); //true ou false ?
+                //if(!empty($_POST['pseudo']) && !empty($_POST['motDePasse'])) {
+                    //if($passHache) && ($_POST['pseudo'] == $pseudo)) {
+                $_SESSION['pseudo'] = $pseudo; // essayer avec id
+                header('Location: index.php');
+                exit;
             }
-        }
+        } else {
+            echo 'tous les champs doivent être connectés';
+        }     
         $getUser = $this->userManager->checkUser();
         $users = $this->userManager->getListUser();
         $vue = new Vue("Connexion");
