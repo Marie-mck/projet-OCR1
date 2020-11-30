@@ -1,64 +1,25 @@
 <?php
 
+session_start();
+//define('ROOT', dirname(__DIR__));
+//echo ROOT;
 //namespace tpnews5a;
-require 'controller/controller.php';
-//require 'view/HomeView.php';
-//require 'view/VoirPlusView.php';
 
-class Routeur {
-    protected $Home;
+require 'controller/Routeur.php';
 
-    public function __construct() {
-        //require 'controller/controller.php';
-        $this->Home = new Controller();
-        
-    }
-
-    public function route() {
-        try {
-            if (isset($_GET['action'])) {
-                if ($_GET['action'] == 'listPosts') {
-                    $this->Home->listPosts();
-                    
-                    //require 'view/HomeView.php';
-                }
-                elseif ($_GET['action'] == 'post') {
-                    if (isset($_GET['id']) && $_GET['id'] > 0) {
-                        $this->Home->post($idNews);
-                      //  require 'view/VoirPlusView.php';
-                    }
-                    else {
-                        //echo 'Erreur : aucun identifiant de billet envoyé';
-                        throw new Exception ('aucun identifiant de billet envoyé');
-                    }
-                }
-                elseif ($_GET['action'] == 'addComment') {
-                    if (isset($_GET['id']) && $_GET['id'] > 0) {
-                        if (!empty($_POST['authorComment']) && !empty($_POST['commentaire'])) {
-                            $this->Home->ajoutComment($_GET['id'], $_POST['authorComment'], $_POST['commentaire']);
-                        }
-                        else {
-                            //echo 'Erreur : tous les champs ne sont pas remplis !';
-                            throw new Exception('Tous les champs ne sont pas remplis !');
-                        }
-                    }
-                    else {
-                        //echo 'Erreur : aucun identifiant de billet envoyé';
-                        throw new Exception('Aucun identifiant de billet envoyé');
-                    }
-                }
-            }
-            else {
-                $this->Home->listPosts();
-            }
-        }
-        catch(Exception $e) {
-            //echo 'Erreur:'.$e->getMessage();
-            $errorMessage = $e->getMessage();
-            require('view/errorView.php');
-        }
-    }
-}
 $routeur = new Routeur();
 $routeur->route();
 
+
+/*
+//constante contenant le dossier racine du projet
+
+define ('WEBROOT', str_replace('index.php', '', $_SERVER['SCRIPT_NAME']));
+echo ('ROOT');
+define('ROOT', str_replace('index.php', '', $_SERVER['SCRIPT_FILENAME']));
+
+//require('ROOT', 'model/Manager.php');
+//require('ROOT', 'controller/controller.php');
+
+$params = explode('/', $_GET['p']);
+print_r($params);*/
