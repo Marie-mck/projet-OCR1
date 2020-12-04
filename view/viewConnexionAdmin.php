@@ -5,7 +5,7 @@
 //unset($_SESSION['connecte']);
 ?>
 
-<!--- page de connexion pour les visiteurs FRONTEND --->
+<!--- page de connexion pour les admin BACKEND --->
 
     <section id="connexion">
 
@@ -30,7 +30,6 @@
         </form>
         
         <div class="connectionPageBtn">
-            <button type="submit" name="inscription" id="inscription" value="inscription"><a class="inscriptionBtn" href="index.php?action=registration">Créer un compte</a></button>
             <button type="submit" name="deconnexion" id="deconnexion" value="deconnexion"><a class="deconnexionBtn"href="index.php?action=logOut">Deconnexion</a></button>
         </div>
 
@@ -41,18 +40,3 @@
             echo $erreur;
         }
         ?>
-
-<h3 class="sup">Liste des Users -> A SUPPRIMER</h3>
-        <table class="tableUsers">
-            <tr><th>pseudo</th><th>email</th><th>password</th><th>Date d'ajout</th><th>Modifier</th><th>Supprimer</th></tr>
-            <?php
-                foreach ($users as $user) {
-                    echo '<tr><td>' . $user->pseudo(). '</td>
-                    <td>'. $user->email(). '</td>
-                    <td>'. $user->motDePasse(). '</td>
-                    <td>'. $user->dateRecord(). '</td>
-                    <td><a href="?modifier='. $user->id(). '">Modifier</a></td>
-                    <td><a href="?supprimer='. $user->id(). '">Supprimer</a></td></tr>';
-                }
-            ?>
-    </table><br/>

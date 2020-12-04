@@ -94,24 +94,39 @@ class CommentManager extends Manager{
         //retourne un objet : $article =$q->fecth(PDO::FETCH_ASSOC) return new News($article)
         //return new News($q->fetch(PDO::FETCH_ASSOC));
     }
-    public function signalComment($commentId){
+    public function signalComment($id){
         $db = $this-> dbConnect();
-        $req = $db->prepare('UPDATE comments SET signal_comment = 1 WHERE id = ?');
-        $req->execute(array($commentId));
-        $signal = $req->rowCount(); 
-        return $signal; 
+        $q = $db->prepare('UPDATE comments SET signalerComment = 1 WHERE id = ?');
+        $q->execute(array($id));
+        //$signal = $req->rowCount(); 
+        return $q;
+    }
+    /*public function getSignalComments($id){
+        $db = $this->dbConnect();
+        $q = $db->prepare('SELECT id, authorComment, commentaire, dateComment, idNews, signalerComment FROM comments WHERE signalerComment = 1 ORDER BY dateComment DESC');
+        $q->execute(array($id));
+        return $q;
+    }*/
+    public function getSignalComments() {
+        $db = $this->dbConnect();
+        $comment = [];
+        $q = $db->query('SELECT id, authorComment, commentaire, dateComment, idNews, signalerComment FROM news.comments WHERE signalerComment = 1 ORDER BY dateComment DESC');
+        $result = $q->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($result as $donnees) {
+            $comment[] = new Comments($donnees);
+        }
+        return $comment;
     }
     //public function updateComment(Comments $comment) { //approve
-        public function updateComment($id) { //approve
+        public function updateComment($id) {
         $db = $this->dbConnect();
         //$q = $this->db->prepare('UPDATE comments SET authorComment = :authorComment, commentaire = :commentaire, idNews = :idNews WHERE id = :id');
-        $q = $db->prepare('UPDATE comments SET authorComment = :authorComment, commentaire = :commentaire WHERE id = ?');
+        $q = $db->prepare('UPDATE comments SET signalerComment = 1 WHERE id = ?');
         //$q->bindValue(':authorComment', $comment->authorComment(), PDO::PARAM_STR);
         //$q->bindValue(':commentaire', $comment->commentaire(), PDO::PARAM_STR);
         //$q->bindValue(':id', $comment->id(), PDO::PARAM_INT);
         $q->execute(array($id));
         return $q;
-        //$modif = $q->rowCount();
     }
     public function deleteComment($id) {
         $db = $this->dbConnect();

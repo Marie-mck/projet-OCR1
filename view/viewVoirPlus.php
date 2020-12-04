@@ -1,6 +1,4 @@
 
-<!--- <p><a href="index.php?id=<?php echo $post->id() ?>">Retour aux chapitres</a></p> --->
-
     <div class="chaptersAccess">
         <ul class="chaptersAccessBtn">
             <li class="chapterAccessList"><a href=""><span class="button">Chapitre précedent</span></a></li>
@@ -31,10 +29,15 @@
         ?>
             <div class="containerComment">
                 <p class="commentTitle"><strong><?= htmlspecialchars($commentaire['authorComment']) ?></strong> le <?= $commentaire['dateComment'] ?></p>
-                <p><?= nl2br(htmlspecialchars($commentaire['commentaire'])) ?></p>
-                <button type="signaler" name="signaler" id="signalerBouton" value="signaler">
-                    <a class="signalerBtn" href="index.php?action=signalerComment">Signaler le commentaire</a></button>
-        </div>
+                <p class="content"><?= nl2br(htmlspecialchars($commentaire['commentaire'])) ?></p>
+                <button type="signaler" name="signaler" id="signalerBouton" value="signaler" onclick="alert('test2')">
+                    <a class="signalerBtn" href="index.php?action=signalerComment&id=<?php echo $commentaire['id']?>">Signaler le commentaire</a></button>
+                    
+                    <!---<form method="post" action="index.php?action=signalerComment$id=<?php //echo $commentaire['id'] ?>">
+                        <input type="hidden" name="nb_report" value="<?//= $commentaire['nb_report'] ?>" />
+                        <input type="submit" value="Signaler le commentaire" />
+                    </form>--->
+            </div>
             
         <?php
         }
@@ -61,3 +64,12 @@
         --->
 
     </section>
+            
+    <script>
+    alert('test');
+    console.log("hello");
+    document.getElementById('signalerBouton').addEventListener('click', _ => {
+        document.getElementById('signalerBouton').style.display = "none";
+        document.querySelector(".content").innerHTML = 'Ce commentaire est en cours de validation après signalement';
+    });
+    </script>

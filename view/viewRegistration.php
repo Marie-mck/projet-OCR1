@@ -1,21 +1,19 @@
-<?php
-//session_start();
-//$_SESSION['connecte'] = 1;
-//require 'login.php';
-//unset($_SESSION['connecte']);
-?>
 
-<!--- page de connexion pour les visiteurs FRONTEND --->
+    <div id="registration">
+    <h3>Bienvenue <?//= htmlspecialchars($_SESSION['pseudo']) ?></h3>
+    
+    <h2 class="inscriptionTitle">Page d'inscription</h2>
 
-    <section id="connexion">
+    <form action="" method="post">
 
-        <h2 class="connectionTitle">Page de connexion</h2>
-
-        <form method="post" action="" class="container_2">
-            <table class="tableConnexion">
+    <table class="tableInscription">
             <tr>
                 <td><label for="pseudo" id="pseudo">Identifiant</label></td>
                 <td><input type="text" name="pseudo" id="pseudo" placeholder="Pseudo" required/></td>
+            </tr>
+            <tr>
+                <td><label for="email" id="email">Email</label></td>
+                <td><input type="email" name="email" id="email" placeholder="Email" required/></td>
             </tr>
             <tr>
                 <td><label for="motDePasse" id="motDePasse">Mot de passe</label></td>
@@ -24,25 +22,18 @@
             <tr>
                 <td colspan ="2">
                 <input type="hidden" name="id" value="<?//= $post->id() ?>" />
-                <button type="submit" name="connexion" id="connexionBtn" value="connexion">CONNEXION</button></td>
+                <button type="submit" name="inscription" id="inscriptionBtn" value="inscription">INSCRIPTION</button></td>
             </tr>
             </table>
-        </form>
-        
-        <div class="connectionPageBtn">
-            <button type="submit" name="inscription" id="inscription" value="inscription"><a class="inscriptionBtn" href="index.php?action=registration">Créer un compte</a></button>
-            <button type="submit" name="deconnexion" id="deconnexion" value="deconnexion"><a class="deconnexionBtn"href="index.php?action=logOut">Deconnexion</a></button>
-        </div>
+    </form>
+    <?php
+    if (isset($erreur)) {
+        echo $erreur;
+    }
+    ?>
 
-    </section>
 
-        <?php
-        if (isset($erreur)) {
-            echo $erreur;
-        }
-        ?>
-
-<h3 class="sup">Liste des Users -> A SUPPRIMER</h3>
+<h3>Liste des Users -> A SUPPRIMER</h3>
         <table class="tableUsers">
             <tr><th>pseudo</th><th>email</th><th>password</th><th>Date d'ajout</th><th>Modifier</th><th>Supprimer</th></tr>
             <?php
@@ -55,4 +46,4 @@
                     <td><a href="?supprimer='. $user->id(). '">Supprimer</a></td></tr>';
                 }
             ?>
-    </table><br/>
+        </table><br/>
