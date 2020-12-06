@@ -16,7 +16,7 @@ class PostManager extends Manager {
         return $db->query('SELECT COUNT(*) FROM news')->fetchColumn();
     }
     //CRUD
-    public function addNews(News $article) {
+    /*public function addPost(News $article) {
         $db = $this->dbConnect();
         $q = $db->prepare('INSERT INTO news(auteur, titre, contenu, dateAjout) VALUES(:auteur, :titre, :contenu, NOW())');
         //$q = $this->db->prepare('INSERT INTO news(auteur, titre, contenu, dateAjout) VALUES(:auteur, :titre, :contenu, NOW())');
@@ -25,6 +25,12 @@ class PostManager extends Manager {
         $q->bindValue(':contenu', $article->contenu(), PDO::PARAM_STR);
         //$q->bindValue(':dateAjout', $article->dateAjout(), PDO::PARAM_INT);
         $q->execute();
+    }*/
+    public function addPost($auteur, $titre, $contenu) {
+        $db = $this->dbConnect();
+        $q = $db->prepare('INSERT INTO news(auteur, titre, contenu, dateAjout) VALUES (?, ?, ?, NOW())');
+        $chapitreAjouts = $q->execute(array($auteur, $titre, $contenu));
+        return $chapitreAjouts;
     }
     public function getNews($idNews) {
         $db = $this->dbConnect();
@@ -70,7 +76,7 @@ class PostManager extends Manager {
         $db = $this->dbConnect();
         // Prépare une requête de type UPDATE.     // Assignation des valeurs à la requête.     // Exécution de la requête.
         //$q = $this->db->prepare('UPDATE news SET auteur = :auteur, titre = :titre, contenu = :contenu, dateModif = :dateModif WHERE id = :id');
-        $q = $db->prepare('UPDATE news SET auteur = :auteur, titre = :titre, contenu = :contenu, dateModif = :dateModif WHERE id = :id');
+        $q = $db->prepare('UPDATE news SET auteur = :auteur, titre = :titre, contenu = :contenu, dateAjout = :dateModif WHERE id = :id');
         $q->bindValue(':titre', $article->titre(), PDO::PARAM_STR);
         $q->bindValue(':auteur', $article->auteur(), PDO::PARAM_STR);
         $q->bindValue(':contenu', $article->contenu(), PDO::PARAM_STR);

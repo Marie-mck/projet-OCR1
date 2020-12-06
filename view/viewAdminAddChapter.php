@@ -5,9 +5,13 @@
             selector: '#mytextarea'
         });
         </script>
-
     
-
-        <form method="post" class="addChapter">
-            <textarea id="mytextarea">Hello, World!</textarea>
+    <h2>Ajouter un chapitre</h2>
+    <div>
+        <form method="post" action="" class="addChapter">
+            <input id="auteur" name="auteur" type="text" placeholder="Auteur" required /><br />
+            <input id="titre" name="titre" type="text" placeholder="Titre" required /><br />
+            <textarea id="mytextarea" name="contenu" required >Hello, World!</textarea>
+            <input type="submit"name="recordChapter" value="recordChapter" class="addChapterBtn"/>
         </form>
+    </div>
