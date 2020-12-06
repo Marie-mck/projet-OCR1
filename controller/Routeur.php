@@ -15,14 +15,16 @@ class Routeur {
     protected $pageHome;
     protected $pageVoirPlus;
     protected $pageAddComment;
+    protected $pageAdmin;
     protected $pageConnexion;
 
     public function __construct() {
         $this->pageHome = new HomeController();
         $this->pageVoirPlus = new VoirPlusController();
         $this->pageAddComment = new VoirPlusController();
-        $this->pageUpdateComment = new AdminController();
+        $this->pageAdmin = new AdminController();
         $this->pageConnexion = new ConnexionController();
+        
     }
 
     public function route() {
@@ -40,6 +42,8 @@ class Routeur {
                         echo 'probleme'; //$erreur = 'identifiant incorrect';
                     }
                 }*/
+                
+                // PAGE CONNEXION
                 if ($_GET['action'] == 'connect') {//se connecter -> formulaire de connection sur page de connection qd clic bouton connexion
                     $this->pageConnexion->connect();
                 }
@@ -60,16 +64,7 @@ class Routeur {
                     $this->pageConnexion->logOut();
                 }
 
-                /*elseif ($_GET['action'] == 'post') {
-                    //$idNews = (int) $_GET['idNews'];
-                    //$this->pageVoirPlus->post($idNews);
-                    $idNews = intval($this->getParametre($_GET, 'id'));
-                        if ($idNews != 0) {
-                            $this->pageVoirPlus->post($idNews);
-                        }
-                        else
-                            throw new Exception("Identifiant de billet non valide");
-                }*/
+                // PAGE VOIRPLUS AFFICHE 1 CHAPITRE ET SES COMMENTAIRES
                 elseif ($_GET['action'] == 'post') {
                     if (isset($_GET['id']) && $_GET['id'] > 0) {
                         $id = (int) $_GET['id'];
@@ -78,87 +73,80 @@ class Routeur {
                     else {
                         throw new Exception ('mauvais id');
                     }
-                        /*$idNews = intval($this->getParametre($_GET, 'id'));
-                        if ($idNews != 0) {
-                            $this->pageVoirPlus->post($idNews);
-                        }
-                        else
-                            throw new Exception("Identifiant de billet non valide");*/
                 }
+                // ------------ AJOUT COMMENT / IDNEWS
                 elseif ($_GET['action'] == 'ajoutComment') {
                         if (isset($_GET['id']) && $_GET['id'] > 0) {
-                            //$this->pageAddComment->ajoutComment($_GET['id'], $_POST['authorComment'], $_POST['commentaire']);
                             $this->pageAddComment->ajoutComment($_GET['id']);
                         } else
                             throw new Exception('Aucun identifiant envoyé');
                 }
-                /*if ($_GET['action'] == 'connexionPage') {//va sur page de connection qd clic bouton connexion
-                    if(isset($_POST['connexion'])) {
-                        $this->pageConnexion->connexion($_POST['pseudo'], $_POST['motDePasse']);
+                
+                // ------------ PAGE ADMIN CHAPTER
+                else if ($_GET['action'] == 'afficherAdminChapter') {
+                    if(isset($_GET['supprimerChapter'])) {
+                        $id = (int) $_GET['id'];
+                        $this->pageAdmin->deleteChapter($id);
                     } else {
-                        $this->pageConnexion->connexionPage();
+                        $this->pageAdmin->afficherPageAdminChapter();
                     }
-                }*/
-                else if ($_GET['action'] == 'afficherPageAdmin') {
-                    if(isset($_GET['supprimerPost'])) {
-                        $id = (int) $_GET['id'];
-                        $this->pageUpdateComment->deleteChapter($id);
-
-                    } elseif(isset($_POST['valider'])) {
-                        $this->pageUpdateComment->validateComment();
-                    
-                    } elseif(isset($_GET['supprimer'])) {
+                }
+                else if ($_GET['action'] == 'addChapter') {
+                    $this->pageAdmin->addChapter();
+                }
+                // --------------PAGE ADMIN COMMENTS
+                else if ($_GET['action'] == 'afficherAdminComment') {
+                    if(isset($_GET['supprimer'])) {
+                        //echo 'ok2';
                         $id = (int) $_GET['id'];
                         //var_dump($id);
-                        $this->pageUpdateComment->deleteComment($id);
+                        $this->pageAdmin->deleteComment($id);
                         //var_dump($id);
-                        //$this->pageUpdateComment->deleteComment((int) $_GET['supprimer']);
-                    
-                    } elseif(isset($_POST['valider'])) {
+                        //$this->pageAdmin->deleteComment((int) $_GET['supprimer']);
+                    } elseif(isset($_GET['modifierComment'])) {
                         //echo 'ok3';
-                        $this->pageUpdateComment->validateComment();
+                        $id = (int) $_GET['id'];
+                        $this->pageAdmin->modifierComment($id);
 
+                    } elseif(isset($_GET['approvedComment'])) {
+                        //echo 'ok3';
+                        $id = (int) $_GET['id'];
+                        $this->pageAdmin->approvedComment($id);
                     } else {
-                        $this->pageUpdateComment->afficherPageAdmin();
+                        $this->pageAdmin->afficherPageAdminComment();
+                    }
+                }
+                //APPROUVER / SIGNALER COMMENT ?
+                elseif ($_GET['action'] == 'signalerComment') {
+                    $id = (int) $_GET['id'];
+                    $this->pageAdmin->signalerComment($id);
+                }
+                
+                // -------------PAGE ADMIN USERS
+                else if ($_GET['action'] == 'afficherAdminUser') {
+                    if(isset($_GET['supprimerUser'])) {
+                        $id = (int) $_GET['id'];
+                        $this->pageAdmin->deleteUser($id);
+                    } else {
+                        $this->pageAdmin->afficherPageAdminUser();
                     }
                 }
                 /*else if ($_GET['action'] == 'afficherPageAdmin') {
                     if(isset($_GET['supprimer'])) {
                         $id = (int) $_GET['id'];
                         //var_dump($id);
-                        $this->pageUpdateComment->deleteComment($id);
+                        $this->pageAdmin->deleteComment($id);
                         //var_dump($id);
-                        //$this->pageUpdateComment->deleteComment((int) $_GET['supprimer']);
-                        //$this->pageUpdateComment->deleteComment((int) $_GET['supprimer']);
+                        //$this->pageAdmin->deleteComment((int) $_GET['supprimer']);
+                        //$this->pageAdmin->deleteComment((int) $_GET['supprimer']);
                     } elseif(isset($_POST['valider'])) {
                         //echo 'ok3';
-                        $this->pageUpdateComment->validateComment();
+                        $this->pageAdmin->validateComment();
                     } else {
-                        $this->pageUpdateComment->afficherPageAdmin();
+                        $this->pageAdmin->afficherPageAdmin();
                     }
                 }*/
-                else if ($_GET['action'] == 'ajoutOfComment') {
-                    if (isset($_GET['id']) && $_GET['id'] > 0) {
-                        //$this->pageAddComment->ajoutComment($_GET['id'], $_POST['authorComment'], $_POST['commentaire']);
-                        $this->pageUpdateComment->ajoutOfComment($_GET['id']);
-                    } else {
-                        throw new Exception('Aucun identifiant envoyé');
-                    }
-                }
-                /*else if ($_GET['action'] == 'afficherPageAdmin') {
-                    $this->pageUpdateComment->afficherPageAdmin();
-                    //$this->pageUpdateComment->afficherPageAdminInfo($_GET['id']);
-                }
-                else if ($_GET['action'] == 'validateComment') {
-                    if(isset($_POST['modifier']) && !empty($_POST['authorComment']) && !empty($_POST['commentaire'])) {
-                        $this->pageUpdateComment->validateComment();
-                    }
-                }
-                else if ($_GET['action'] == 'deleteComment') {
-                    if (isset($_GET['id'])) {
-                    $this->pageUpdateComment->deleteComment($_POST['id']);
-                    }
-                }*/
+                
             }
                 else {  // aucune action définie : affichage de l'accueil
                     $this->pageHome->listPosts();
