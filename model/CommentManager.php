@@ -39,29 +39,20 @@ class CommentManager extends Manager{
         return $comment;
     }
     
-    public function getListCommentaires($idNews) {
+    /*public function getListCommentaires($idNews) {
         $db = $this->dbConnect();
-        $commentaires = $db->prepare('SELECT id, authorComment, commentaire, dateComment, idNews FROM news.comments WHERE idNews = ?');
+        $getCommentaires = $db->prepare('SELECT id, authorComment, commentaire, dateComment, idNews FROM news.comments WHERE idNews = ?');
         //$q->execute(array($_GET['idNews']));
-        $commentaires->execute(array($idNews));
+        $getCommentaires->execute(array($idNews));
         //$result = $q->fetch();
-        return $commentaires;
-    }
+        return $getCommentaires;
+    }*/
     public function count() {
         $db = $this->dbConnect();
         // Exécute une requête COUNT() et retourne le nombre de résultats retourné.
         return $db->query('SELECT COUNT(*) FROM news.comments')->fetchColumn();  
     }
     // Récupération des commentaires pour une news
-    /*public function getComment($idNews) {
-        $db = $this->dbConnect();
-        $q = $db->prepare('SELECT id, authorComment, commentaire, dateComment, idNews FROM news.comments WHERE idNews = ? ORDER BY dateComment DESC');
-        $commentaires= $q->execute(array($idNews));
-        var_dump($commentaires);
-        //$comments = $q->fetch();
-        //return new Comments($comments);
-        return $commentaires;
-    }*/
     public function getComment($idNews) {
         $db = $this->dbConnect();
         //$q = $this->db->prepare('SELECT id, auteurComment, commentaire, dateComment, FROM comments WHERE id = :id');
@@ -78,24 +69,12 @@ class CommentManager extends Manager{
         $commentaires->execute(array($idNews));
         return $commentaires;
     }
-    // Récupération des commentaires
-    public function getOneComment($id) {
-        $db = $this->dbConnect();
-        //$q = $this->db->prepare('SELECT id, authorComment, commentaire, dateComment, idNews FROM news.comments WHERE id = :id');
-        $q = $db->prepare('SELECT id, authorComment, commentaire, dateComment FROM news.comments WHERE id = ?');
-        //$q->bindValue(':id', $id, PDO::PARAM_INT); // On attache les valeurs
-        $comment = $q->execute(array($id)); // On exécute la requête
-        //$req->execute(array($_GET['news']));
-        // On stocke le résultat dans un tableau associatif : $news = $q->fetch();
-        //$q->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'News');
-        //$comment = $q->fetch();
-        return $comment;
-    }
+    
     public function signalComment($id){
         $db = $this-> dbConnect();
         $q = $db->prepare('UPDATE comments SET signalerComment = 1 WHERE id = ?');
         $q->execute(array($id));
-        //$signal = $req->rowCount(); 
+        //$signal = $q->rowCount(); 
         return $q;
     }
     /*public function getSignalComments($id){
@@ -115,39 +94,48 @@ class CommentManager extends Manager{
         return $comment;
     }
     
-    //public function updateComment(Comments $comment) { //approve
-        public function updateComment($authorComment, $commentaire, $id) {
+    // Récupération des commentaires
+    /*public function getOneComment($id) {
         $db = $this->dbConnect();
-        //$q = $this->db->prepare('UPDATE comments SET authorComment = :authorComment, commentaire = :commentaire, idNews = :idNews WHERE id = ?');
+        $q = $db->prepare('SELECT id, authorComment, commentaire FROM comments WHERE id = :id');
+        $q->execute([':id' =>$id]);
+        $getComments = $q->fetch();
+        //var_dump($getComments);
+        return new Comments($getComments);
+    }*/
+
+    public function updateComment($authorComment, $commentaire, $id) {
+        $db = $this->dbConnect();
+        //$q = $this->db->prepare('UPDATE comments SET authorComment = :authorComment, commentaire = :commentaire WHERE id = ?');
         $q = $this->db->prepare('UPDATE comments SET authorComment = ?, commentaire = ? WHERE id = ?');
         //$q->bindValue(':authorComment', $comment->authorComment(), PDO::PARAM_STR);
         //$q->bindValue(':commentaire', $comment->commentaire(), PDO::PARAM_STR);
         //$q->bindValue(':id', $comment->id(), PDO::PARAM_INT);
+        //$commentUpdated = $commentUpdate->execute(array($_POST['authorComment'], $_POST['commentaire'], $_GET['id']));
         $commentUpdate = $q->execute(array($authorComment, $commentaire, $id));
+        //$commentUpdated = $q->execute(array('authorComment'=>$authorComment, 'commentaire'=>$commentaire, 'id'=>$id));
         return $commentUpdate;
     }
-
-    public function validate($id){
+    function getOneComment($id) {
         $db = $this->dbConnect();
-        $q = $this->db->prepare('UPDATE comments SET signalercomment = 1 WHERE id = ?');
-        $comment = $q->execute(array($id));
-        return $comment;
+        $getComments = $db->prepare('SELECT authorComment, commentaire FROM comments WHERE id = ?');
+        $getComments->execute(array($id));
+        return $getComments;
     }
+
     public function approved($id){
         $db = $this->dbConnect();
         $q = $this->db->prepare('UPDATE comments SET signalercomment = 0 WHERE id = ?');
         $comment = $q->execute(array($id));
         return $comment;
     }
+
     public function deleteComment($id) {
         $db = $this->dbConnect();
         //$q = $this->db->prepare('DELETE FROM comments WHERE id = :id');
         $q = $db->prepare('DELETE FROM comments WHERE id = ?');
         //$q->bindValue(':id', $id, PDO::PARAM_INT);
         $q->execute(array($id));
-        //var_dump($id);
-        //print_r([':id' =>$id]);
-        //var_dump($q);
         //$deleteComment = $q->fetch();
         return $q;
     }

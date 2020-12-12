@@ -35,27 +35,14 @@
                 <td>'. $comment->dateComment(). '</td>
                 <td>' .$comment->idNews(). '</td>
                 <td>' .$comment->id(). '</td>
-                <td><a href="?action=afficherAdminComment&modifierComment&id=' .$comment->id(). '">Modifier</a></td>
+                <td><a href="?action=afficherAdminComment&modifierCommentBtn&id=' .$comment->id(). '">Modifier</a></td>
                 <td><a href="?action=afficherAdminComment&supprimer&id='. $comment->id(). '">Supprimer</a></td></tr>';
         }
     ?>
 </table>
 
-<h3>formulaire de modif</h3>
-
-<!---<form method="POST" action="index.php?action=modifierComment&id=<?//= $comment->id() ?>" class="modifComments">--->
-<form method="POST" action="" class="modifComments">
-        <input type="hidden" name="idNews" value="<?php //echo $comment->idNews(); ?>" />
-        <label for="auteur">Pseudo</label>
-        <input type="text" name="authorComment" value =" <?php echo (isset($comment)) ? htmlspecialchars_decode($comment->authorComment()) :''; ?>" placeholder="Auteur" /><br />
-        <label for="commentaire">Commentaire</label>
-        <textarea name="commentaire" placeholder="Contenu du commentaire"> <?php echo (isset($comment)) ? htmlspecialchars_decode($comment->commentaire()) :''; ?></textarea><br />
-        
-        <input type="submit" value="Poster" name="Poster"/>
-        <input type="submit" value="Ajouter" name="ajouter"/>
-</form>
-
-
+<p><?php //echo (htmlspecialchars($getComments->authorComment())); ?></p>
+<p><?php //echo (htmlspecialchars($getComments->commentaire())); ?></p>
 
 <div class="chapter">
             <h3>Chapitre : <?php //echo htmlspecialchars(strtoupper($post->titre())); ?></h3>

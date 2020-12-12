@@ -54,16 +54,16 @@ class AdminController {
 //----------------------partie POST - CHAPITRE---------------
 
     //AFFICHAGE DE POSTS ET COMMENTAIRES SUR LA PAGE VOIR PLUS
-    public function post($idNews) {
+    /*public function post($idNews) {
         $post = $this->postManager->getNews($idNews);
         $commentaires = $this->commentManager->getComment($idNews);
         /*ob_start();
         require ('view/VoirPlusView.php');
         $content = ob_get_clean();
-        require ('view/template.php');*/
+        require ('view/template.php');
         $vue = new Vue("AdminChapter");
         $vue->generer(array('post' => $post, 'commentaires' => $commentaires));
-    }
+    }*/
     
     //AFFICHAGE DES CHAPITRES SUR LA PAGE ADMINISTRATION DES CHAPITRES (MODIFICATION, SUPPRESSION°)
     public function afficherPageAdminChapter() {
@@ -108,6 +108,15 @@ class AdminController {
         $vue->generer(array());
     }
     
+
+
+    public function afficherMonProfil() {
+        //echo "test2";
+        $comments = $this->commentManager->getListComment();
+        $vue = new Vue("MonProfil");
+        $vue->generer(array('comments' => $comments));
+    }
+
 //-----------------------partie COMMENTS----------------------
 
     public function afficherPageAdminComment() {
@@ -117,108 +126,62 @@ class AdminController {
         $vue = new Vue("AdminComment");
         $vue->generer(array('comments' => $comments, 'commentSignalesTableaux' => $commentSignalesTableaux));
     }
-    
-    /*public function ajoutComment($idNews) {
-        if(isset($_POST['Commenter'])) {
-            $post = $this->postManager->getNews($idNews);
-            $commentaires = $this->commentManager->getComment($idNews);
-            $commentsAjouts = null;
-            if (isset($_POST) && !empty($_POST)) {
-                if (!empty($_POST['authorComment']) && !empty($_POST['commentaire'])) {
-                    $commentsAjouts = $this->commentManager->ajouterCommentaire($idNews, $_POST['authorComment'], $_POST['commentaire'], $signalerComment);
-                    $message = 'Votre commentaire a bien été posté';
-                } else {
-                    $message = 'Veuillez remplir tous les champs';
+
+    public function signalerComment($id) {
+        echo "test2";
+        $comments = $this->commentManager->getListComment();
+        $commentSignales = $this->commentManager->signalComment($_GET['id']);
+        $commentSignalesTableaux = $this->commentManager->getSignalComments($_GET['id']);
+        $vue = new Vue("VoirPlus");
+        $vue->generer(array('comments' => $comments, 'commentSignales' => $commentSignales, 'commentSignalesTableaux' => $commentSignalesTableaux));
+    }
+
+    public function afficherComment($id) {
+        $getComments =  $this->commentManager->getOneComment($_GET['id']);
+        //var_dump($getComments);
+        $vue = new Vue("AdminUpdateComment");
+        $vue->generer(array('getComments' =>$getComments));
+        //header('Location: index.php?action=AdminComment');
+    }
+
+    public function modifierComment() {
+        echo'test8';
+        //if(isset($_GET['modifierNewComment'])) {
+            if(isset($_POST['authorComment']) AND isset($_POST['commentaire'])) {
+                echo"test12";
+                if(!empty($_POST['authorComment']) AND !empty($_POST['commentaire'])) {
+                    echo 'test3';
+                    $authorComment = htmlspecialchars($_POST['authorComment']);
+                    $commentaire = htmlspecialchars($_POST['commentaire']);
+                    var_dump($authorComment);
+                    $id = (int) $_GET['id'];
+                    $commentUpdate = $this->commentManager->updateComment($authorComment, $commentaire, $id);
+                    var_dump($commentUpdate);
                 }
             }
-        }
-        $vue = new Vue("AddComment");
-        $vue->generer(array('post' => $post, 'commentaires' => $commentaires, 'comments' => $comments, 'chapitres' => $chapitres, 'commentsAjouts' => $commentsAjouts));
-    }*/
-
-    public function signalerComment($id) { // A SUPPRIMER pas d'ajout de commentaires sur page admin
+        //}
+        echo"result";
         $comments = $this->commentManager->getListComment();
-        $commentSignales = $this->commentManager->signalComment($_GET['id']);
-        $commentSignalesTableaux = $this->commentManager->getSignalComments($_GET['id']);
-        $vue = new Vue("AdminComment");
-        $vue->generer(array('comments' => $comments, 'commentSignales' => $commentSignales, 'commentSignalesTableaux' => $commentSignalesTableaux));
-        
-    }
-    /*public function modifierComment($id) {
-        $valideComment = $this->commentManager->updateComment(['id'=>$_GET['modifier'], 'authorComment'=>$_POST['authorComment'], 'commentaire'=>$_POST['commentaire'], 'signalerComment'=>$_POST['signalerComment']]);
-        $message = 'Commentaire approuvé';
-        if (isset($_GET['modifier'])) {
-            //$comment = $this->commentManager->getOneComment((int) $_GET['modifier']);
-        //}
-        /*if((!empty($_POST['authorComment']) && !empty($_POST['commentaire']))) {
-            $valideComment = $this->commentManager->updateComment(['id'=>$_GET['modifier'], 'authorComment'=>$_POST['authorComment'], 'commentaire'=>$_POST['commentaire']]);
-            $message = 'Commentaire modifié';
-        }
-        $vue = new Vue("AdminComment");
-        $vue->generer(array('comment' => $comment, 'valideComment' => $valideComment));
-        //header('Location: index.php?action=afficherPageAdmin');
-    }*/
-    /*public function modifierComment($id) {
-        if (isset($_GET['modifierComment'])) {
-            //$comment = $this->commentManager->getOneComment((int) $_GET['modifierComment']);
-            $comments = $this->commentManager->getOneComment((int) $_GET['modifierComment']);
-            //var_dump($comments);
-            //$vue = new Vue("AdminComment");
-            //$vue->generer(array());
-        }
-        if(!empty($_POST['authorComment']) && !empty($_POST['commentaire'])) {
-            //$valideComment = $this->commentManager->updateComment(['id'=>$_GET['modifierComment'], 'authorComment'=>$_POST['authorComment'], 'commentaire'=>$_POST['commentaire']]);
-            $authorComment = htmlspecialchars($_POST['authorComment']);
-            $commentaire = htmlspecialchars($_POST['commentaire']);
-            //$signalerComment = ($_POST['signalerComment']);
-
-            $valideComment = $this->commentManager->updateComment($authorComment, $commentaire);
-            var_dump($valideComment);
-            $vue = new Vue("AdminComment");
-            $vue->generer(array('comment' => $comment, 'valideComment' => $valideComment));
-        }
-        $comments = $this->commentManager->getListComment();
-        $commentSignales = $this->commentManager->signalComment($_GET['id']);
-        $commentSignalesTableaux = $this->commentManager->getSignalComments($_GET['id']);
-        $vue = new Vue("AdminComment");
-        $vue->generer(array('comments' => $comments, 'commentSignales' => $commentSignales, 'commentSignalesTableaux' => $commentSignalesTableaux));
-        //header('Location: index.php?action=afficherAdminComment');
-    }*/
-    public function modifierComment($id) {
-        if (isset($_GET['modifierComment'])) {
-            //$comment = $this->commentManager->getOneComment((int) $_GET['modifierComment']);
-            $comments = $this->commentManager->getOneComment((int) $_GET['modifierComment']);
-        }
-        if(!empty($_POST['authorComment']) && !empty($_POST['commentaire'])) {
-            //$valideComment = $this->commentManager->updateComment(['id'=>$_GET['modifierComment'], 'authorComment'=>$_POST['authorComment'], 'commentaire'=>$_POST['commentaire']]);
-            $authorComment = htmlspecialchars($_POST['authorComment']);
-            $commentaire = htmlspecialchars($_POST['commentaire']);
-            //$signalerComment = ($_POST['signalerComment']);
-            $valideComment = $this->commentManager->updateComment($authorComment, $commentaire);
-            var_dump($valideComment);
-            $vue = new Vue("AdminComment");
-            $vue->generer(array('comment' => $comment, 'valideComment' => $valideComment));
-        }
+        $getComments =  $this->commentManager->getOneComment($_GET['id']);
+        var_dump($getComments);
+        //$vue = new Vue("AdminUpdateComment");
+        //$vue->generer(array('getComments' =>$getComments));
         header('Location: index.php?action=afficherAdminComment');
-    }
-
-    public function approvedComment($id){    
-        //if (isset($_POST['supprimer'])){
-            //$deleteComment = $this->commentManager->deleteComment((int) $_GET['supprimer']);
-        $approvedComment = $this->commentManager->approved($_GET['id']);
-            //echo 'test';
-        $vue = new Vue("AdminComment");
-        header('Location: index.php?action=afficherAdminComment');
-        //}
-    }
-    public function deleteComment($id){    
-        //if (isset($_POST['supprimer'])){
-            //$deleteComment = $this->commentManager->deleteComment((int) $_GET['supprimer']);
-        $deleteComment = $this->commentManager->deleteComment($_GET['id']);
-            //echo 'test';
-        $vue = new Vue("AdminComment");
-        header('Location: index.php?action=afficherAdminComment');
-        //}
     }
     
+    public function approvedComment($id){    
+        $approvedComment = $this->commentManager->approved($_GET['id']);
+        $vue = new Vue("AdminComment");
+        header('Location: index.php?action=afficherAdminComment');
+    }
+
+    public function deleteComment($id){    
+        //if (isset($_POST['supprimer'])){
+        //$deleteComment = $this->commentManager->deleteComment((int) $_GET['supprimer']);
+        $deleteComment = $this->commentManager->deleteComment($_GET['id']);
+        //echo 'test';
+        $vue = new Vue("AdminComment");
+        header('Location: index.php?action=afficherAdminComment');
+        //}
+    }
 }
