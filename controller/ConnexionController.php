@@ -10,20 +10,22 @@ class ConnexionController {
     }
 
     //liste des users
-    public function listUser() {
+    /*public function listUser() {
         $users = $this->userManager->getListUser();
         $vue = new Vue("Connexion");
         $vue->generer(array('users' => $users));
-    }
-    // connexion ou inscription
-    function connect ($pseudo, $motDePasse) {
+    }*/
+    
+
+// CONNEXION
+    function connect() {
         if (isset($_GET['id']) && ($_GET['id'] > 0)) {
             //$getid = intval($_GET['id']);
-            $userInfo = $this->userManager->checkUser($pseudo, $motDePasse);
+            //$userInfo = $this->userManager->checkUser($pseudo, $motDePasse);
+            $userInfo = $this->userManager->checkUser($_POST['pseudo'], $_POST['motDePasse']);
             $vue = new Vue("monProfil");
             $vue->generer(array('userInfo' => $userInfo));
             echo 'ca marche';
-            var_dump($userInfo);
         }
     }
     //bouton connexion pour se connecter -> vers page connexion
@@ -32,8 +34,38 @@ class ConnexionController {
         $vue = new Vue("Connexion");
         $vue->generer(array('users' => $users));
     }
+
+    public function connexion($pseudo, $motDePasse) {
+        //echo 'ok';
+        if(isset($_POST['connexion']) && isset($_POST['pseudo']) && isset($_POST['motDePasse'])) {
+            //$pass_hache = password_hash($_POST['motDePasse'], PASSWORD_DEFAULT);
+            $user = $this->userManager->getUser($_POST['pseudo']);
+
+            if(!empty($user)) {
+
+                if ($passHache = password_verify($_POST['motDePasse'], $user['motDePasse'])) { //true ou false ?
+                    //$passHache = password_verify($_POST['motDePasse'], $user['motDePasse']); //true ou false ?
+                    var_dump($passHache);
+                    //if(!empty($_POST['pseudo']) && !empty($_POST['motDePasse'])) {
+                        //if($passHache) && ($_POST['pseudo'] == $pseudo)) {
+                    $_SESSION['pseudo'] = $pseudo; // essayer avec id
+                    header('Location: index.php');
+                    exit;
+                } else {
+                    echo"identifiant ou mot de passe incorrect";
+                    //header('Location: index.php?action=connexionPage');
+                }
+            } else {
+                echo 'tous les champs doivent être connectés';
+            }
+        $getUser = $this->userManager->checkUser($pseudo, $motDePasse);
+        $users = $this->userManager->getListUser();
+        $vue = new Vue("Connexion");
+        $vue->generer(array('users' => $users, 'getUser' => $getUser));
+    }
+    }
     //est ce que l'utilisateur est déjà connecté ?
-    public function alreadyLogged() {
+    /*public function alreadyLogged() {
         echo 'est connecté';
     }
     public function is_logged() : bool {
@@ -55,20 +87,23 @@ class ConnexionController {
             header('Location: view/viewRegistration.php');
             exit(); //pour pas continuer le script si l'utilisateur n'est pas connecté
         }
-    }
+    }*/
+
+
+//INSCRIPTION    AJOUTER UN USER
     public function registration() {
         if(isset($_POST['inscription'])) {
             //echo 'ok';
             $pass_hache = password_hash($_POST['motDePasse'], PASSWORD_DEFAULT);
-
             if(!empty($_POST['pseudo']) && !empty($_POST['email']) && !empty($_POST['motDePasse'])) {
                 //echo 'ok';
                 $pseudo = htmlspecialchars($_POST['pseudo']);
                 $email = htmlspecialchars($_POST['email']);
                 $motDePasse = $pass_hache;
-
+                $isAdmin = ($_POST['isAdmin']);
+                
                 $users = $this->userManager->getListUser();
-                $addUser = $this->userManager->addUser($pseudo, $email, $motDePasse);
+                $addUser = $this->userManager->addUser($pseudo, $email, $motDePasse, $isAdmin);
                 $vue = new Vue("Registration");
                 $vue->generer(array('addUser' => $addUser, 'users' => $users));
                 $message = 'user bien enregistré';
@@ -81,39 +116,8 @@ class ConnexionController {
         $vue->generer(array('users' => $users));
     }
 
-    public function connexion($pseudo, $motDePasse) {
-        echo 'ok';
-        if(isset($_POST['connexion']) && isset($_POST['pseudo']) && isset($_POST['motDePasse'])) {
-            //$pass_hache = password_hash($_POST['motDePasse'], PASSWORD_DEFAULT);
-            $user = $this->userManager->getUser($_POST['pseudo']);
-            if(!empty($user)) {
-                var_dump($user);
-                $passHache = password_verify($_POST['motDePasse'], $user['motDePasse']); //true ou false ?
-                //if(!empty($_POST['pseudo']) && !empty($_POST['motDePasse'])) {
-                    //if($passHache) && ($_POST['pseudo'] == $pseudo)) {
-                $_SESSION['pseudo'] = $pseudo; // essayer avec id
-                header('Location: index.php');
-                exit;
-            }
-        } else {
-            echo 'tous les champs doivent être connectés';
-        }     
-        $getUser = $this->userManager->checkUser();
-        $users = $this->userManager->getListUser();
-        $vue = new Vue("Connexion");
-        $vue->generer(array('users' => $users, 'getUser' => $getUser));
-    }
-    /*public function initSession() : bool{
-            if(!session_id()) {
-                session_start();
-                session_regenerate_id();
-                return true;
-                $vue = new Vue("Connexion");
-                echo 'connecté';
-            }
-            echo 'pas connecté';
-        }*/
-        
+
+//DECONNEXION
     public function logOut() {
         session_start();
         $_SESSION = array('connecte');

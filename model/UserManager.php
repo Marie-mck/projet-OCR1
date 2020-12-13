@@ -35,7 +35,7 @@ class UserManager extends Manager {
 
             if($userExist == 1) {
                 $user = $q->fetch();
-                $_SESSION['id'] = $user['id'];
+                //$_SESSION['id'] = $user['id'];
                 $_SESSION['pseudo'] = $user['pseudo'];
                 $_SESSION['motDePasse'] = $user['motDePasse'];
             }
@@ -44,36 +44,34 @@ class UserManager extends Manager {
             }
         } else {
         }
-        var_dump($q);
-        
+        //var_dump($q);
     }
 
-    public function addUser($pseudo, $email, $motDePasse) {
+    public function addUser($pseudo, $email, $motDePasse, $isAdmin) {
         $db = $this->dbConnect();
         $pass_hache = password_hash($_POST['motDePasse'], PASSWORD_DEFAULT);
-        $q = $db->prepare('INSERT INTO user(pseudo, email, motDePasse, dateRecord) VALUES (?, ?, ?, NOW())');
+        $q = $db->prepare('INSERT INTO user(pseudo, email, motDePasse, dateRecord, isAdmin) VALUES (?, ?, ?, NOW(), ?)');
         //$userAjouts = $q->execute(array('pseudo' => $pseudo, 'email' => $email, 'motDePasse' => $pass_hache));
-        $userAjouts = $q->execute(array($pseudo, $email, $motDePasse));
-        //$user = $q->fetch();
+        $userAjouts = $q->execute(array($pseudo, $email, $motDePasse, $isAdmin));
+        //$user = $q->fetch();ù
         return $userAjouts;
     }
     
     public function getUser($pseudo) {
         $db = $this->dbConnect();
-        $q = $db->prepare('SELECT id, pseudo, email, motDePasse, dateRecord FROM user WHERE pseudo = :pseudo');
+        $q = $db->prepare('SELECT id, pseudo, email, motDePasse, dateRecord, isAdmin FROM user WHERE pseudo = :pseudo');
         //$q->execute([':id' =>$id]); // On exécute la requête
         $q->execute(array(':pseudo' => $pseudo));
         // On stocke le résultat dans un tableau associatif : $news = $q->fetch();
         $user = $q->fetch();
         return $user;
-        //return new User($user);
         //retourne un objet : $article =$q->fecth(PDO::FETCH_ASSOC) return new News($article)
     }
     
     public function getListUser() {
         $db = $this->dbConnect();
         $user = [];
-        $q = $db->query('SELECT id, pseudo, email, motDePasse, dateRecord FROM user ORDER BY dateRecord DESC');
+        $q = $db->query('SELECT id, pseudo, email, motDePasse, dateRecord, isAdmin FROM user ORDER BY dateRecord DESC');
         $result = $q->fetchAll(PDO::FETCH_ASSOC);
         foreach ($result as $donnees) {
             $user[] = new User($donnees);
@@ -91,14 +89,11 @@ class UserManager extends Manager {
         $q->execute();
         //$result = $q->fetchAll();
     }
-    
-    public function delete($id) {
+    public function deleteUser($id) {
         $db = $this->dbConnect();
-        $q = $db->prepare('DELETE FROM user WHERE id = :id');
-        $q->bindValue(':id', $id, PDO::PARAM_INT);
-        $q->execute();
-        //$this->_db->exec('DELETE FROM personnages WHERE id = '.$id->id()); //Call to a member function id() on int
-        //$this->db->exec('DELETE FROM news WHERE id = '.$article->id());
+        $q = $db->prepare('DELETE FROM user WHERE id = ?');
+        $q->execute(array($id));
+        return $q;
     }
 
     //est ce que l'utilisateur est connecté ?

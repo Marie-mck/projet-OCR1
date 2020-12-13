@@ -20,6 +20,10 @@
                 <td><input type="motDePasse" name="motDePasse" id="motDePasse" placeholder="Mot de passe" required/></td>
             </tr>
             <tr>
+                <td><label for="isAdmin" id="isAdmin">Profil</label></td>
+                <td><input type="isAdmin" name="isAdmin" id="isAdmin" placeholder="Profil" required/></td>
+            </tr>
+            <tr>
                 <td colspan ="2">
                 <input type="hidden" name="id" value="<?//= $post->id() ?>" />
                 <button type="submit" name="inscription" id="inscriptionBtn" value="inscription">INSCRIPTION</button></td>
@@ -35,13 +39,14 @@
 
 <h3>Liste des Users -> A SUPPRIMER</h3>
         <table class="tableUsers">
-            <tr><th>pseudo</th><th>email</th><th>password</th><th>Date d'ajout</th><th>Modifier</th><th>Supprimer</th></tr>
+            <tr><th>pseudo</th><th>email</th><th>password</th><th>Date d'ajout</th><th>isAdmin</th><th>Modifier</th><th>Supprimer</th></tr>
             <?php
                 foreach ($users as $user) {
                     echo '<tr><td>' . $user->pseudo(). '</td>
                     <td>'. $user->email(). '</td>
                     <td>'. $user->motDePasse(). '</td>
                     <td>'. $user->dateRecord(). '</td>
+                    <td>'. $user->isAdmin(). '</td>
                     <td><a href="?modifier='. $user->id(). '">Modifier</a></td>
                     <td><a href="?supprimer='. $user->id(). '">Supprimer</a></td></tr>';
                 }

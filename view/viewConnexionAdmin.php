@@ -28,7 +28,7 @@
             </tr>
             </table>
         </form>
-        
+    
         <div class="connectionPageBtn">
             <button type="submit" name="deconnexion" id="deconnexion" value="deconnexion"><a class="deconnexionBtn"href="index.php?action=logOut">Deconnexion</a></button>
         </div>
