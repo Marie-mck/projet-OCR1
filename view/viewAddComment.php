@@ -23,6 +23,7 @@
         <input id="authorComment" name="authorComment" type="text" placeholder="Votre pseudo" required /><br />
         <textarea id="commentaire" name="commentaire" rows="10" placeholder="Votre commentaire" required></textarea><br />
         <input type="hidden" name="id" value="<?= $post->id() ?>" />
+        <input type="hidden" name="signalerComment" value="0" />
         <input type="submit" value="Commenter" class="commentBtn"/>
     </form>
 

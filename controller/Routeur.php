@@ -110,8 +110,11 @@ class Routeur {
                         $this->pageAdmin->afficherComment($id);
                     
                     } elseif (isset($_GET['modifierNewComment'])) {
+                        //if(isset($_GET['id'])) {
                             $id = (int) $_GET['id'];
                             $this->pageAdmin->modifierComment($id);
+                        //}
+                        
         
                     } elseif(isset($_GET['approvedComment'])) {
                         $id = (int) $_GET['id'];

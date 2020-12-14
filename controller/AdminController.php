@@ -138,32 +138,31 @@ class AdminController {
 
     public function afficherComment($id) {
         $getComments =  $this->commentManager->getOneComment($_GET['id']);
+        var_dump($_GET['id']);
         //var_dump($getComments);
         $vue = new Vue("AdminUpdateComment");
         $vue->generer(array('getComments' =>$getComments));
         //header('Location: index.php?action=AdminComment');
     }
 
-    public function modifierComment() {
-        echo'test8';
-        //if(isset($_GET['modifierNewComment'])) {
-            if(isset($_POST['authorComment']) AND isset($_POST['commentaire'])) {
+    public function modifierComment($id) {
+        //if(isset($_GET['id'])) {
+            if(isset($_GET['id']) && isset($_POST['authorComment']) AND isset($_POST['commentaire'])) {
                 echo"test12";
+                var_dump($_GET['id']);
                 if(!empty($_POST['authorComment']) AND !empty($_POST['commentaire'])) {
                     echo 'test3';
                     $authorComment = htmlspecialchars($_POST['authorComment']);
                     $commentaire = htmlspecialchars($_POST['commentaire']);
                     var_dump($authorComment);
                     $id = (int) $_GET['id'];
+                    var_dump($id);
                     $commentUpdate = $this->commentManager->updateComment($authorComment, $commentaire, $id);
                     var_dump($commentUpdate);
                 }
             }
         //}
-        echo"result";
-        $comments = $this->commentManager->getListComment();
-        $getComments =  $this->commentManager->getOneComment($_GET['id']);
-        var_dump($getComments);
+        //$getComments =  $this->commentManager->getOneComment($_GET['id']);
         //$vue = new Vue("AdminUpdateComment");
         //$vue->generer(array('getComments' =>$getComments));
         header('Location: index.php?action=afficherAdminComment');

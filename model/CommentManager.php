@@ -116,9 +116,10 @@ class CommentManager extends Manager{
         //$commentUpdated = $q->execute(array('authorComment'=>$authorComment, 'commentaire'=>$commentaire, 'id'=>$id));
         return $commentUpdate;
     }
+    
     function getOneComment($id) {
         $db = $this->dbConnect();
-        $getComments = $db->prepare('SELECT authorComment, commentaire FROM comments WHERE id = ?');
+        $getComments = $db->prepare('SELECT id, authorComment, commentaire FROM comments WHERE id = ?');
         $getComments->execute(array($id));
         return $getComments;
     }
