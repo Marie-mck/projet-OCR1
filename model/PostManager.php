@@ -64,7 +64,7 @@ class PostManager extends Manager {
         //$q = $this->_db->query('SELECT id, auteur, titre, contenu, dateAjout, DATE_FORMAT(dateAjout, \'%d/%m/%Y à %Hh%imin%ss\') AS dateAjout_fr FROM news 
         //ORDER BY dateAjout DESC LIMIT 0, 3');
         $posts = [];
-        $q = $db->query('SELECT id, auteur, titre, contenu, dateAjout FROM news ORDER BY dateAjout ASC LIMIT 0, 5');
+        $q = $db->query('SELECT id, auteur, titre, contenu, dateAjout FROM news ORDER BY dateAjout ASC LIMIT 0, 3');
         $result = $q->fetchAll(PDO::FETCH_ASSOC);
         foreach ($result as $donnees) {
             $posts[] = new News($donnees);
@@ -72,7 +72,7 @@ class PostManager extends Manager {
         return $posts;
     }
 
-    public function update(News $article) {
+    /*public function update(News $article) {
         $db = $this->dbConnect();
         // Prépare une requête de type UPDATE.     // Assignation des valeurs à la requête.     // Exécution de la requête.
         //$q = $this->db->prepare('UPDATE news SET auteur = :auteur, titre = :titre, contenu = :contenu, dateModif = :dateModif WHERE id = :id');
@@ -84,8 +84,22 @@ class PostManager extends Manager {
         $q->bindValue(':id', $article->id(), PDO::PARAM_INT);
         $q->execute();
         //$result = $q->fetchAll();
+    }*/
+    
+    public function updateChapter($auteur, $titre, $contenu, $id) {
+        $db = $this->dbConnect();
+        $q = $this->db->prepare('UPDATE news SET auteur = ?, titre = ?, contenu = ? WHERE id = ?');
+        $commentUpdate = $q->execute(array($auteur, $titre, $contenu, $id));
+        return $chapterUpdate;
     }
     
+    function getOneChapter($id) {
+        $db = $this->dbConnect();
+        $getChapters = $db->prepare('SELECT id, auteur, titre, contenu FROM news WHERE id = ?');
+        $getChapters->execute(array($id));
+        return $getChapters;
+    }
+
     public function deletePost($id) {
         $db = $this->dbConnect();
         $q = $db->prepare('DELETE FROM news WHERE id = ?');

@@ -7,18 +7,20 @@
     <h3 class="pageAdminTitle">Tableau - Liste des chapitres</h3>
 
         <table class="tableChapters">
-            <tr><th>Auteur</th><th>Contenu</th><th>Date d'ajout</th><th>N° du chapitre</th><th>Modifier</th><th>Supprimer</th></tr>
+            <tr><th>Auteur</th><th>Titre</th><th>Contenu</th><th>Date d'ajout</th><th>N° du chapitre</th><th>Modifier</th><th>Supprimer</th></tr>
             <?php
                 foreach ($chapitres as $chapitre){
                     echo '<tr><td>'. $chapitre->auteur(). '</td>
+                        <td>'. $chapitre->titre(). '</td>
                         <td>'. $chapitre->contenu(). '</td>
                         <td>'. $chapitre->dateAjout(). '</td>
                         <td>' .$chapitre->id(). '</td>
-                        <td><a href="?valider='. $chapitre->id(). '">Valider</a></td>
-                        <td><a href="?action=afficherPageAdmin&supprimerChapter&id='. $chapitre->id(). '">Supprimer</a></td></tr>';
+                        <td><a href="?action=afficherAdminChapter&modifierChapterBtn&id='. $chapitre->id(). '">Modifier</a></td>
+                        <td><a href="?action=afficherAdminChapter&supprimerChapter&id='. $chapitre->id(). '">Supprimer</a></td></tr>';
                     }
                 ?>
         </table><br/>
+
 
     <p>Nombre de chapitres créés : <?php// echo $countComment->idNews() ?></p>
     <p>Nombre de commentaires créés : <?php //echo $commentsCount->count() ?></p>

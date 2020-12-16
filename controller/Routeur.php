@@ -87,9 +87,20 @@ class Routeur {
                     if(isset($_GET['supprimerChapter'])) {
                         $id = (int) $_GET['id'];
                         $this->pageAdmin->deleteChapter($id);
+                        } elseif (isset($_GET['modifierChapterBtn'])) {
+                            echo"test12";
+                            $id = (int) $_GET['id'];
+                            $this->pageAdmin->afficherChapter($id);
+                        
+                        } elseif (isset($_GET['modifierNewChapter'])) {
+                            //if(isset($_GET['id'])) {
+                                $id = (int) $_GET['id'];
+                                $this->pageAdmin->modifierChapter($id);
+                            //}
                     } else {
                         $this->pageAdmin->afficherPageAdminChapter();
                     }
+                
                 }
                 else if ($_GET['action'] == 'addChapter') {
                     $this->pageAdmin->addChapter();
@@ -169,6 +180,10 @@ class Routeur {
                         $this->pageAdmin->afficherPageAdmin();
                     }
                 }*/
+                // -------------PAGE CHAPTERS
+                else if ($_GET['action'] == 'afficherPageAllPosts') {
+                    $this->pageAdmin->afficherPageAllPosts();
+                }
                 
             }
                 else {  // aucune action définie : affichage de l'accueil

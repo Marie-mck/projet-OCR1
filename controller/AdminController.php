@@ -72,14 +72,41 @@ class AdminController {
         $vue->generer(array('chapitres' => $chapitres));
     }
 
-    public function updateChapter() {
-        
+    public function afficherChapter($id) {
+        $getChapters =  $this->postManager->getOneChapter($_GET['id']);
+        var_dump($_GET['id']);
+        $vue = new Vue("AdminUpdateChapter");
+        $vue->generer(array('getChapters' =>$getChapters));
+        //header('Location: index.php?action=AdminComment');
+    }
+
+    public function modifierChapter($id) {
+        //if(isset($_GET['id'])) {
+            if(isset($_GET['id']) AND isset($_POST['auteur']) AND isset($_POST['titre']) AND isset($_POST['contenu'])) {
+                var_dump($_GET['id']);
+                if(!empty($_POST['auteur']) AND !empty($_POST['titre']) AND !empty($_POST['contenu'])) {
+                    echo 'test3';
+                    $auteur = htmlspecialchars($_POST['auteur']);
+                    $titre = htmlspecialchars($_POST['titre']);
+                    $contenu = htmlspecialchars($_POST['contenu']);
+                    var_dump($auteur);
+                    $id = (int) $_GET['id'];
+                    var_dump($id);
+                    $chapterUpdate = $this->postManager->updateChapter($auteur, $titre, $contenu, $id);
+                    var_dump($chapterUpdate);
+                }
+            }
+        //}
+        //$getComments =  $this->commentManager->getOneComment($_GET['id']);
+        //$vue = new Vue("AdminUpdateComment");
+        //$vue->generer(array('getComments' =>$getComments));
+        header('Location: index.php?action=afficherAdminChapter');
     }
     
     public function deleteChapter($id) {
         $deleteChapter = $this->postManager->deletePost($_GET['id']);
         $vue = new Vue("AdminChapter");
-        header('Location: index.php?action=afficherPageAdmin');
+        header('Location: index.php?action=afficherPageAdminChapter');
     }
 
     //AFFICHAGE DU FORMULAIRE D'AJOUT DES CHAPITRES SUR LA PAGE AJOUT DES CHAPITRES
@@ -107,9 +134,16 @@ class AdminController {
         $vue = new Vue("AdminAddChapter");
         $vue->generer(array());
     }
-    
 
+//-----------------------partie page chapitres - tous les chapitres ----------------------
 
+    public function afficherPageAllPosts() {
+        $allPosts = $this->postManager->getList();
+        $vue = new Vue("AllChapters");
+        $vue->generer(array('allPosts' => $allPosts));
+    }
+
+//-----------------------partie ----------------------
     public function afficherMonProfil() {
         //echo "test2";
         $comments = $this->commentManager->getListComment();
