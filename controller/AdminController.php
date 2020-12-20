@@ -65,7 +65,7 @@ class AdminController {
         $vue->generer(array('post' => $post, 'commentaires' => $commentaires));
     }*/
     
-    //AFFICHAGE DES CHAPITRES SUR LA PAGE ADMINISTRATION DES CHAPITRES (MODIFICATION, SUPPRESSION°)
+    //AFFICHAGE DES CHAPITRES SUR LA PAGE ADMINISTRATION DES CHAPITRES (MODIFICATION, SUPPRESSION)
     public function afficherPageAdminChapter() {
         $chapitres = $this->postManager->getList();
         $vue = new Vue("AdminChapter");
@@ -74,35 +74,29 @@ class AdminController {
 
     public function afficherChapter($id) {
         $getChapters =  $this->postManager->getOneChapter($_GET['id']);
-        var_dump($_GET['id']);
-        $vue = new Vue("AdminUpdateChapter");
+        //var_dump($_GET['id']);
+        $vue = new Vue("AdminAddChapter");
         $vue->generer(array('getChapters' =>$getChapters));
         //header('Location: index.php?action=AdminComment');
     }
 
-    public function modifierChapter($id) {
+    public function modifierChapter() {
         //if(isset($_GET['id'])) {
             if(isset($_GET['id']) AND isset($_POST['auteur']) AND isset($_POST['titre']) AND isset($_POST['contenu'])) {
                 var_dump($_GET['id']);
                 if(!empty($_POST['auteur']) AND !empty($_POST['titre']) AND !empty($_POST['contenu'])) {
-                    echo 'test3';
                     $auteur = htmlspecialchars($_POST['auteur']);
                     $titre = htmlspecialchars($_POST['titre']);
                     $contenu = htmlspecialchars($_POST['contenu']);
                     var_dump($auteur);
                     $id = (int) $_GET['id'];
-                    var_dump($id);
                     $chapterUpdate = $this->postManager->updateChapter($auteur, $titre, $contenu, $id);
                     var_dump($chapterUpdate);
                 }
             }
-        //}
-        //$getComments =  $this->commentManager->getOneComment($_GET['id']);
-        //$vue = new Vue("AdminUpdateComment");
-        //$vue->generer(array('getComments' =>$getComments));
         header('Location: index.php?action=afficherAdminChapter');
     }
-    
+
     public function deleteChapter($id) {
         $deleteChapter = $this->postManager->deletePost($_GET['id']);
         $vue = new Vue("AdminChapter");
@@ -118,21 +112,26 @@ class AdminController {
 
     public function addChapter() {
         //echo "test1";
+        $getChapters =  $this->postManager->getOneChapter($_GET['id']);
+        var_dump($getChapters);
+        $vue = new Vue("AdminAddChapter");
+        $vue->generer(array('getChapters' => $getChapters));
+
         if(isset($_POST['recordChapter'])) {
             //echo "test2";
             if(!empty($_POST['auteur']) && !empty($_POST['titre']) && !empty($_POST['contenu'])) {
+                $id = ($_GET['id']);
                 $auteur = htmlspecialchars($_POST['auteur']);
                 $titre = htmlspecialchars($_POST['titre']);
                 $contenu = htmlspecialchars($_POST['contenu']);
-                
-                $addChapter = $this->postManager->addPost($auteur, $titre, $contenu);
-                
+
+                $addChapter = $this->postManager->addPost($id, $auteur, $titre, $contenu);
             } else {
                 echo 'non'; //$erreur = "Veuillez remplir tous les champs";
             }
         }
         $vue = new Vue("AdminAddChapter");
-        $vue->generer(array());
+        $vue->generer(array('getChapters' => $getChapters));
     }
 
 //-----------------------partie page chapitres - tous les chapitres ----------------------
@@ -172,7 +171,7 @@ class AdminController {
 
     public function afficherComment($id) {
         $getComments =  $this->commentManager->getOneComment($_GET['id']);
-        var_dump($_GET['id']);
+        //var_dump($_GET['id']);
         //var_dump($getComments);
         $vue = new Vue("AdminUpdateComment");
         $vue->generer(array('getComments' =>$getComments));

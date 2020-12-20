@@ -1,6 +1,3 @@
-<?php if(isset($_SESSION['pseudo'])) { //pour page administration A faire  ?>
-        <p>Bonjour <?php echo $_SESSION['pseudo']; ?> <p>
-<?php } ?>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -24,21 +21,45 @@
                 <input class="burger" type="checkbox">
                     <ul>
                         <li><a href="index.php">Accueil</a></li>
-                        <li><a href="#author_pres">A propos</a></li>
-                        <li><a href="#lastChaptersTitle">Chapitres</a></li>
-                        <li><a class="adminLink" href="index.php?action=afficherPageAdmin<?php //echo $post->id()?>">Administration</a>
+                        <li><a href="index.php?action=afficherMonProfil">A propos</a></li>
+                        <li><a href="index.php?action=afficherPageAllPosts">Chapitres</a></li>
+
+                        
+                        <?php if(isset($_SESSION['pseudo'])) { //pour page administration A faire  ?>
+                        <li class="adminAccess">Administration
                             <ul>
-                                <li><a class="adminLink" href="index.php?action=afficherAdminUser<?php //echo $post->id()?>">Administration User</a></li>
-                                <li><a class="adminLink" href="index.php?action=afficherAdminChapter<?php //echo $post->id()?>">Administration Chapitre</a></li>
-                                <li><a class="adminLink" href="index.php?action=afficherAdminComment<?php //echo $post->id()?>">Administration Comment</a></li>
-                                <li><a class="adminLink" href="index.php?action=afficherAdminAddChapter<?php //echo $post->id()?>">Administration ajout Chapter</a></li>
+                                <li><a class="adminLink" href="index.php?action=afficherAdminUser<?php //echo $post->id()?>">User</a></li>
+                                <li><a class="adminLink" href="index.php?action=afficherAdminChapter<?php //echo $post->id()?>">Chapitre</a></li>
+                                <li><a class="adminLink" href="index.php?action=afficherAdminComment<?php //echo $post->id()?>">Commentaire</a></li>
+                                <li><a class="adminLink" href="index.php?action=afficherAdminChapter&addChapter<?php //echo $post->id()?>">Ajouter un chapitre</a></li>
                             </ul>
                         </li>
-                        <button type="submit" id="connexion_Btn" value="connexion"><a href="index.php?action=connexionPage">Connexion</a></button>
+                        <?php } ?>
+                        
+                        <?php
+                            if (isset($_SESSION['pseudo'])) { ?>
+                            <button type="submit" class="welcome">Bonjour <?php echo $_SESSION['pseudo']; ?></button>
+                            <button type="submit" name="deconnexion" id="deconnexion_Btn" value="deconnexion"><a class="deconnexionBtn" href="index.php?action=logOut">Deconnexion</a></button>
+                            
+                            <?php } else { ?>
+                            <button type="submit" id="connexion_Btn" value="connexion"><a class="connexionBtn" href="index.php?action=connexionPage">Connexion</a></button>
+                            <button type="submit" name="deconnexion" id="deconnexion_Btn" value="deconnexion"><a class="deconnexionBtn" href="index.php?action=logOut">Deconnexion</a></button>
+                            <?php }  ?>
+
+                        <!--- <button type="submit" id="connexion_Btn" value="connexion">
+                            <a class="connexionBtn" href="index.php?action=connexionPage">Connexion</a></button>
+                        <button type="submit" name="deconnexion" id="deconnexion_Btn" value="deconnexion">
+                            <a class="deconnexionBtn" href="index.php?action=logOut">Deconnexion</a></button>--->
                     </ul>
             </nav>
         </header>
 
+        <!--- <div class="connexionVisiteur">
+            <?php //if(isset($_SESSION['pseudo'])) { //pour page administration A faire  ?>
+            <p>Bonjour <?php //echo $_SESSION['pseudo']; ?> <p>
+            <?php //} ?>
+        </div>--->
+        
         <div id="contenu">
             <?= $contenu ?>
         </div>
@@ -49,23 +70,7 @@
                 <div>Liens</div>
                 <div>Contact</div>
                 <div>Pages
-                    <div class="pagesLinkFooter">
-                    <ul>
-                        <li><a href="index.php">Accueil</a></li>
-                        <li><a href="#author_pres">A propos</a></li>
-                        <li><a href="#lastChaptersTitle">Chapitres</a></li>
-                        <li><a class="adminLink" href="index.php?action=afficherPageAdmin<?php //echo $post->id()?>">Administration</a>
-                            <ul>
-                                <li><a class="adminLink" href="index.php?action=afficherAdminUser<?php //echo $post->id()?>">Administration User</a></li>
-                                <li><a class="adminLink" href="index.php?action=afficherAdminChapter<?php //echo $post->id()?>">Administration Chapitre</a></li>
-                                <li><a class="adminLink" href="index.php?action=afficherAdminComment<?php //echo $post->id()?>">Administration Comment</a></li>
-                                <li><a class="adminLink" href="index.php?action=afficherAdminAddChapter<?php //echo $post->id()?>">Administration ajout Chapter</a></li>
-                                
-                            </ul>
-                        </li>
-                        <li><a href="index.php?action=connexionPage">Connexion</a></li>
-                    </ul>
-                    </div>
+                    
                 </div>
             </div>
 

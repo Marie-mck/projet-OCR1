@@ -82,72 +82,75 @@ class Routeur {
                         throw new Exception('Aucun identifiant envoyé');
                 }
                 
-                // ------------ PAGE ADMIN CHAPTER
-                else if ($_GET['action'] == 'afficherAdminChapter') {
+// si connecté alors accès à l'admin
+
+            //elseif (isset($_POST['connexion'])) {
+                //if(isset($_SESSION['pseudo'])) {
+                
+                    // ------------ PAGE ADMIN CHAPTER
+                if ($_GET['action'] == 'afficherAdminChapter') {
                     if(isset($_GET['supprimerChapter'])) {
                         $id = (int) $_GET['id'];
                         $this->pageAdmin->deleteChapter($id);
-                        } elseif (isset($_GET['modifierChapterBtn'])) {
-                            echo"test12";
-                            $id = (int) $_GET['id'];
-                            $this->pageAdmin->afficherChapter($id);
+                    
+                    } elseif (isset($_GET['modifierChapterBtn'])) {
+                        //echo"test12";
+                        $id = (int) $_GET['id'];
+                        $this->pageAdmin->afficherChapter($id);
                         
-                        } elseif (isset($_GET['modifierNewChapter'])) {
-                            //if(isset($_GET['id'])) {
-                                $id = (int) $_GET['id'];
-                                $this->pageAdmin->modifierChapter($id);
-                            //}
+                    } elseif (isset($_GET['modifierNewChapter'])) {
+                        $id = (int) $_GET['id'];
+                        $this->pageAdmin->modifierChapter($id);
+                    }
+                    else if (isset($_GET['addChapter'])) {
+                        $this->pageAdmin->addChapter();
+                    
                     } else {
                         $this->pageAdmin->afficherPageAdminChapter();
                     }
-                
                 }
-                else if ($_GET['action'] == 'addChapter') {
+                /*else if ($_GET['action'] == 'addChapter') {
                     $this->pageAdmin->addChapter();
-                }
+                }*/
 
                 // --------------PAGE ADMIN COMMENTS
-                else if ($_GET['action'] == 'afficherAdminComment') {
+                elseif ($_GET['action'] == 'afficherAdminComment') {
                     if(isset($_GET['supprimer'])) {
-                        //echo 'ok2';
                         $id = (int) $_GET['id'];
-                        //var_dump($id);
                         $this->pageAdmin->deleteComment($id);
                         //$this->pageAdmin->deleteComment((int) $_GET['supprimer']);
 
                     } elseif (isset($_GET['modifierCommentBtn'])) {
-                        echo"test12";
+                        //echo"test12";
                         $id = (int) $_GET['id'];
                         $this->pageAdmin->afficherComment($id);
-                    
+
                     } elseif (isset($_GET['modifierNewComment'])) {
                         //if(isset($_GET['id'])) {
-                            $id = (int) $_GET['id'];
-                            $this->pageAdmin->modifierComment($id);
+                        $id = (int) $_GET['id'];
+                        $this->pageAdmin->modifierComment($id);
                         //}
-                        
-        
+
                     } elseif(isset($_GET['approvedComment'])) {
                         $id = (int) $_GET['id'];
                         $this->pageAdmin->approvedComment($id);
-                    
                     } else {
                         $this->pageAdmin->afficherPageAdminComment();
                     }
                 }
-                //-------Modifier Comment
-                /*elseif (isset($_GET['modifierComment'])) {
-                echo 'ok3';
-                $id = (int) $_GET['id'];
-                $this->pageAdmin->modifierComment($id);
-                }*/
-                /*} elseif(isset($_GET['modifierNewComment'])) {
-                        echo 'ok3';
-                        $this->pageAdmin->modifierComment($_GET['id'], $_POST['authorComment'], $_POST['commentaire']);
-                        //$this->pageAdmin->modifierComment($id);
-                */
-                
-                //-----------APPROUVER / SIGNALER COMMENT ?
+                    //-------Modifier Comment
+                    /*elseif (isset($_GET['modifierComment'])) {
+                    echo 'ok3';:
+                    $id = (int) $_GET['id'];
+                    $this->pageAdmin->modifierComment($id);
+                    }*/
+                    /*} elseif(isset($_GET['modifierNewComment'])) {
+                            echo 'ok3';
+                            $this->pageAdmin->modifierComment($_GET['id'], $_POST['authorComment'], $_POST['commentaire']);
+                            //$this->pageAdmin->modifierComment($id);
+                    */
+                    
+                    //-----------APPROUVER / SIGNALER COMMENT ?
                 elseif ($_GET['action'] == 'signalerComment') {
                     $id = (int) $_GET['id'];
                     $this->pageAdmin->signalerComment($id);
@@ -185,10 +188,12 @@ class Routeur {
                     $this->pageAdmin->afficherPageAllPosts();
                 }
                 
+            //}
+
+            } else {  // aucune action définie : affichage de l'accueil
+                $this->pageHome->listPosts();
             }
-                else {  // aucune action définie : affichage de l'accueil
-                    $this->pageHome->listPosts();
-                }
+            
         }
         catch (Exception $e) {
             $this->erreur($e->getMessage());
