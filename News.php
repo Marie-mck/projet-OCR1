@@ -1,5 +1,4 @@
 <?php
-
 //namespace tpnews5a;
 
 class News {
@@ -9,6 +8,7 @@ class News {
     protected $contenu;
     protected $dateAjout;
     protected $dateModif;
+    protected $picture;
     
     public function __construct(array $donnees /*, $id, $titre, $auteur, $contenu, $dateAjout, $dateModif*/) {
         $this->hydrate($donnees);
@@ -16,10 +16,8 @@ class News {
 
     public function hydrate($donnees) {
         foreach ($donnees as $key => $value)   {
-            $method = 'set'.ucfirst($key); // On récupère le nom du setter correspondant à l'attribut    // …
-            if (method_exists($this, $method)) // Si le setter correspondant existe
-            // if (is_callable([$this, $methode]))  
-            {// On appelle le setter.      
+            $method = 'set'.ucfirst($key);
+            if (method_exists($this, $method)) {   
             $this->$method($value);
             } 
         }
@@ -27,7 +25,7 @@ class News {
     public function newsValide()   {
         return !(empty($this->auteur) || empty($this->titre) || empty($this->contenu));
     }
-    
+
     //getters
     public function id() {
         return $this->id;
@@ -46,6 +44,9 @@ class News {
     }
     public function dateModif() {
         return $this->dateModif;
+    }
+    public function picture() {
+        return $this->picture;
     }
 
     //setters
@@ -73,18 +74,13 @@ class News {
     public function setDateModif($dateModif) {
         $this->dateModif = $dateModif;
     }
-
-    //Affichage des cinq premières news à l'accueil du site avec texte réduit à 200 caractères
-    public function affichageNews() {
-
+    public function setPicture($picture) {
+        $this->picture = $picture;
     }
+
     //Affichage des cinq premières news à l'accueil du site avec texte réduit à x caractères ici 20
-    public function couperText(string $contenu, int $limit = 10) { //lgueur à garder
-        echo substr($contenu, 0, 20).' '. '[...]';
-        /*if (mb_strlen($contenu) <= $limit) { //Retourne la taille d'une chaîne
-            return $contenu;
-        }
-        return substr($contenu, 0, $limit) . '...';
-    }*/
+    public function couperText(string $contenu, int $limit = 10) {
+        echo substr($contenu, 0, 120).' '. '[...]';
     }
+
 }

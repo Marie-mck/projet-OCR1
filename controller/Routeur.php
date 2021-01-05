@@ -2,12 +2,14 @@
 //define('ROOT', dirname(__DIR__));
 //echo ROOT;
 //namespace tpnews5a\controller;
-
 //require 'controller/Controller.php';
 require 'controller/HomeController.php';
 require 'controller/VoirPlusController.php';
-require 'controller/AdminController.php';
+require 'controller/PostController.php';
 require 'controller/ConnexionController.php';
+require 'controller/RegistrationController.php';
+require 'controller/UserController.php';
+require 'controller/CommentController.php';
 require 'view/Vue.php';
 require 'login.php';
 
@@ -15,33 +17,26 @@ class Routeur {
     protected $pageHome;
     protected $pageVoirPlus;
     protected $pageAddComment;
-    protected $pageAdmin;
+    protected $pagePost;
     protected $pageConnexion;
+    protected $pageRegistration;
+    protected $pageUser;
+    protected $pageComment;
 
     public function __construct() {
         $this->pageHome = new HomeController();
         $this->pageVoirPlus = new VoirPlusController();
         $this->pageAddComment = new VoirPlusController();
-        $this->pageAdmin = new AdminController();
+        $this->pagePost = new PostController();
         $this->pageConnexion = new ConnexionController();
-        
+        $this->pageRegistration = new RegistrationController();
+        $this->pageUser = new UserController();
+        $this->pageComment = new CommentController();
     }
 
     public function route() {
         try {
             if (isset($_GET['action'])) {
-                /*if ($_GET['action'] == 'is_logged') { // si déjà connécté
-                    echo 'dejà connecté';
-                    if (!empty($_POST['pseudo']) && !empty($_POST['motDePasse'])) {
-                        if ($_POST['pseudo'] === 'john' && $_POST['motDePasse'] === 'doe') {
-                        session_start();
-                        $_SESSION['connecte'] = 1;
-                        $this->pageConnexion->is_logged();
-                    }
-                    } else {
-                        echo 'probleme'; //$erreur = 'identifiant incorrect';
-                    }
-                }*/
                 
                 // PAGE CONNEXION
                 if ($_GET['action'] == 'connect') {//se connecter -> formulaire de connection sur page de connection qd clic bouton connexion
@@ -55,8 +50,9 @@ class Routeur {
                     }
                 }
                 if ($_GET['action'] == 'registration') { //s'inscrire -> formulaire d'inscription sur page d'inscription
-                    $this->pageConnexion->registration();
+                    $this->pageRegistration->registration();
                 }
+
                 if ($_GET['action'] == 'addOneUser') {
                     $this->pageConnexion->addOneUser();
                 }
@@ -69,8 +65,7 @@ class Routeur {
                     if (isset($_GET['id']) && $_GET['id'] > 0) {
                         $id = (int) $_GET['id'];
                         $this->pageVoirPlus->post($id);
-                    }
-                    else {
+                    } else {
                         throw new Exception ('mauvais id');
                     }
                 }
@@ -82,113 +77,87 @@ class Routeur {
                         throw new Exception('Aucun identifiant envoyé');
                 }
                 
-// si connecté alors accès à l'admin
+        // si connecté alors accès à l'admin
 
-            //elseif (isset($_POST['connexion'])) {
-                //if(isset($_SESSION['pseudo'])) {
+            elseif (isset($_SESSION['pseudo'])) {
                 
                     // ------------ PAGE ADMIN CHAPTER
                 if ($_GET['action'] == 'afficherAdminChapter') {
                     if(isset($_GET['supprimerChapter'])) {
                         $id = (int) $_GET['id'];
-                        $this->pageAdmin->deleteChapter($id);
+                        $this->pagePost->deleteChapter($id);
                     
                     } elseif (isset($_GET['modifierChapterBtn'])) {
-                        //echo"test12";
                         $id = (int) $_GET['id'];
-                        $this->pageAdmin->afficherChapter($id);
-                        
+                        $this->pagePost->afficherChapter($id);
+                    
                     } elseif (isset($_GET['modifierNewChapter'])) {
                         $id = (int) $_GET['id'];
-                        $this->pageAdmin->modifierChapter($id);
-                    }
-                    else if (isset($_GET['addChapter'])) {
-                        $this->pageAdmin->addChapter();
+                        $this->pagePost->modifierChapter($id);
                     
+                    } elseif (isset($_GET['addChapter'])) {
+                        $this->pagePost->addChapter();
+
                     } else {
-                        $this->pageAdmin->afficherPageAdminChapter();
+                        $this->pagePost->afficherPageAdminChapter();
                     }
                 }
-                /*else if ($_GET['action'] == 'addChapter') {
-                    $this->pageAdmin->addChapter();
-                }*/
-
+                
                 // --------------PAGE ADMIN COMMENTS
                 elseif ($_GET['action'] == 'afficherAdminComment') {
                     if(isset($_GET['supprimer'])) {
                         $id = (int) $_GET['id'];
-                        $this->pageAdmin->deleteComment($id);
-                        //$this->pageAdmin->deleteComment((int) $_GET['supprimer']);
+                        $this->pageComment->deleteComment($id);
 
                     } elseif (isset($_GET['modifierCommentBtn'])) {
-                        //echo"test12";
                         $id = (int) $_GET['id'];
-                        $this->pageAdmin->afficherComment($id);
+                        $this->pageComment->afficherComment($id);
 
                     } elseif (isset($_GET['modifierNewComment'])) {
-                        //if(isset($_GET['id'])) {
                         $id = (int) $_GET['id'];
-                        $this->pageAdmin->modifierComment($id);
-                        //}
+                        $this->pageComment->modifierComment($id);
 
                     } elseif(isset($_GET['approvedComment'])) {
                         $id = (int) $_GET['id'];
-                        $this->pageAdmin->approvedComment($id);
+                        $this->pageComment->approvedComment($id);
                     } else {
-                        $this->pageAdmin->afficherPageAdminComment();
+                        $this->pageComment->afficherPageAdminComment();
                     }
                 }
-                    //-------Modifier Comment
-                    /*elseif (isset($_GET['modifierComment'])) {
-                    echo 'ok3';:
-                    $id = (int) $_GET['id'];
-                    $this->pageAdmin->modifierComment($id);
-                    }*/
-                    /*} elseif(isset($_GET['modifierNewComment'])) {
-                            echo 'ok3';
-                            $this->pageAdmin->modifierComment($_GET['id'], $_POST['authorComment'], $_POST['commentaire']);
-                            //$this->pageAdmin->modifierComment($id);
-                    */
                     
                     //-----------APPROUVER / SIGNALER COMMENT ?
                 elseif ($_GET['action'] == 'signalerComment') {
                     $id = (int) $_GET['id'];
-                    $this->pageAdmin->signalerComment($id);
+                    $this->pageComment->signalerComment($id);
                 }
                 elseif ($_GET['action'] == 'afficherMonProfil') {
-                    $this->pageAdmin->afficherMonProfil();
+                    $this->pageComment->afficherMonProfil();
                 }
                 
                 // -------------PAGE ADMIN USERS
                 else if ($_GET['action'] == 'afficherAdminUser') {
                     if(isset($_GET['supprimerUser'])) {
                         $id = (int) $_GET['id'];
-                        $this->pageAdmin->deleteUser($id);
-                    } else {
-                        $this->pageAdmin->afficherPageAdminUser();
-                    }
-                }
-                /*else if ($_GET['action'] == 'afficherPageAdmin') {
-                    if(isset($_GET['supprimer'])) {
+                        $this->pageUser->deleteUser($id);
+
+                    } elseif (isset($_GET['modifierUserBtn'])) {
                         $id = (int) $_GET['id'];
-                        //var_dump($id);
-                        $this->pageAdmin->deleteComment($id);
-                        //var_dump($id);
-                        //$this->pageAdmin->deleteComment((int) $_GET['supprimer']);
-                        //$this->pageAdmin->deleteComment((int) $_GET['supprimer']);
-                    } elseif(isset($_POST['valider'])) {
-                        //echo 'ok3';
-                        $this->pageAdmin->validateComment();
+                        $this->pageUser->afficherUser($id);
+
+                    } elseif (isset($_GET['modifierNewUser'])) {
+                        $id = (int) $_GET['id'];
+                        $this->pageUser->modifierUser($id);
+                    
                     } else {
-                        $this->pageAdmin->afficherPageAdmin();
+                        $this->pageUser->afficherPageAdminUser();
                     }
-                }*/
-                // -------------PAGE CHAPTERS
-                else if ($_GET['action'] == 'afficherPageAllPosts') {
-                    $this->pageAdmin->afficherPageAllPosts();
                 }
                 
-            //}
+                // -------------PAGE CHAPTERS
+                else if ($_GET['action'] == 'afficherPageAllPosts') {
+                    $this->pagePost->afficherPageAllPosts();
+                }
+            }
 
             } else {  // aucune action définie : affichage de l'accueil
                 $this->pageHome->listPosts();
@@ -213,5 +182,4 @@ class Routeur {
         else
         throw new Exception("Paramètre '$nom' absent");
     }
-
 }
