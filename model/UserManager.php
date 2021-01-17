@@ -1,19 +1,19 @@
 <?php
-
+namespace App\Model;
 //enregistrer un nouveau visiteur
 //savoir si visiteur déjà enregistré
 //connecter un visiteur déjà enregistré
-
 //require 'model/Manager.php';
-require 'User.php';
+//require 'User.php';
+use App\Model\User;
 
 class UserManager extends Manager {
 
     public function count()  {
         $db = $this->dbConnect();
-        // Exécute une requête COUNT() et retourne le nombre de résultats retourné.
         return $db->query('SELECT COUNT(*) FROM user')->fetchColumn();
     }
+
     //fct pour initialiser la session
     function initSession() : bool{
         if(!session_id()) {
@@ -25,95 +25,68 @@ class UserManager extends Manager {
     }
 
     public function checkUser($pseudo, $motDePasse) {
-        var_dump($pseudo, $motDePasse);
         $db = $this->dbConnect();
-        //$q = $db->prepare('SELECT id  FROM user WHERE pseudo = ? && motDePasse = ?');
         $q = $db->prepare('SELECT id, pseudo, motDePasse  FROM user WHERE pseudo = ? AND motDePasse = ?');
         if($q->execute(array($pseudo, $motDePasse)) == true) {
-            
             $userExist = $q->rowCount();//nbr de rangée qui existe avec les informations demandées -> bool dc fct pas
-
             if($userExist == 1) {
                 $user = $q->fetch();
-                //$_SESSION['id'] = $user['id'];
                 $_SESSION['pseudo'] = $user['pseudo'];
                 $_SESSION['motDePasse'] = $user['motDePasse'];
             }
             else {
-                echo "pas ok";
+                $erreur = "Mauvais mail ou mot de passe !";
             }
         } else {
+            $return = "Tous les champs doivent être complétés";
         }
-        //var_dump($q);
     }
 
     public function addUser($pseudo, $email, $motDePasse, $isAdmin) {
         $db = $this->dbConnect();
         $pass_hache = password_hash($_POST['motDePasse'], PASSWORD_DEFAULT);
         $q = $db->prepare('INSERT INTO user(pseudo, email, motDePasse, dateRecord, isAdmin) VALUES (?, ?, ?, NOW(), ?)');
-        //$userAjouts = $q->execute(array('pseudo' => $pseudo, 'email' => $email, 'motDePasse' => $pass_hache));
         $userAjouts = $q->execute(array($pseudo, $email, $motDePasse, $isAdmin));
-        //$user = $q->fetch();ù
         return $userAjouts;
     }
-    
+
     public function getUser($pseudo) {
         $db = $this->dbConnect();
         $q = $db->prepare('SELECT id, pseudo, email, motDePasse, dateRecord, isAdmin FROM user WHERE pseudo = :pseudo');
-        //$q->execute([':id' =>$id]); // On exécute la requête
         $q->execute(array(':pseudo' => $pseudo));
-        // On stocke le résultat dans un tableau associatif : $news = $q->fetch();
         $user = $q->fetch();
         return $user;
-        //retourne un objet : $article =$q->fecth(PDO::FETCH_ASSOC) return new News($article)
     }
     
     public function getListUser() {
         $db = $this->dbConnect();
         $user = [];
         $q = $db->query('SELECT id, pseudo, email, motDePasse, dateRecord, isAdmin FROM user ORDER BY dateRecord DESC');
-        $result = $q->fetchAll(PDO::FETCH_ASSOC);
+        $result = $q->fetchAll(\PDO::FETCH_ASSOC);
         foreach ($result as $donnees) {
             $user[] = new User($donnees);
         }
         return $user;
     }
-    
-    public function update(User $user) {
+
+    function getOneUser($id) {
         $db = $this->dbConnect();
-        $q = $db->prepare('UPDATE user SET pseudo = :pseudo, email = :email, motDePasse = :motDePasse, dateRecord = :dateRecord WHERE id = :id');
-        $q->bindValue(':pseudo', $user->pseudo(), PDO::PARAM_STR);
-        $q->bindValue(':email', $user->email(), PDO::PARAM_STR);
-        $q->bindValue(':motDePasse', $user->motDePasse(), PDO::PARAM_STR);
-        $q->bindValue(':id', $user->id(), PDO::PARAM_INT);
-        $q->execute();
-        //$result = $q->fetchAll();
+        $getUsers = $db->prepare('SELECT id, pseudo, email, motDePasse, isAdmin FROM user WHERE id = ?');
+        $getUsers->execute(array($id));
+        return $getUsers;
     }
+
+    public function updateUser($pseudo, $email, $motDePasse, $isAdmin, $id) {
+        $db = $this->dbConnect();
+        $q = $this->db->prepare('UPDATE user SET pseudo = ?, email = ? , motDePasse = ?, isAdmin = ? WHERE id = ?');
+        $userUpdate = $q->execute(array($pseudo, $email, $motDePasse, $isAdmin, $id));
+        return $userUpdate;
+    }
+
     public function deleteUser($id) {
         $db = $this->dbConnect();
         $q = $db->prepare('DELETE FROM user WHERE id = ?');
         $q->execute(array($id));
         return $q;
     }
-
-    //est ce que l'utilisateur est connecté ?
-    /*public function is_logged() : bool {
-            if (session_status() === PHP_SESSION_NONE) {
-                session_start();
-                $_SESSION['connecte'] = 1;
-                $users = $this->userManager->getListUser();
-                $vue = new Vue("Connexion");
-                $vue->generer(array('users' => $users));
-                echo 'est connecté';
-            }
-            return !empty($_SESSION['connecte']);
-            //$vue = new Vue("index");
-            header('Location: index.php');
-    }
-    public function utilisateurConnecte() : void {
-        if(!is_logged()) {
-            header('Location: view/viewRegistration.php');
-            exit(); //pour pas continuer le script si l'utilisateur n'est pas connecté
-        }
-    }*/
 }
