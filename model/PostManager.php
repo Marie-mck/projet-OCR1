@@ -1,9 +1,11 @@
 <?php
+namespace App\Model;
 
-//namespace tpnews5a\model;
 //use tpnews5a\model\Manager;
-require 'model/Manager.php';
-require 'News.php';
+/*require 'model/Manager.php';
+require 'News.php';*/
+use App\Model\Manager;
+use App\Model\News;
 
 class PostManager extends Manager {
 
@@ -12,13 +14,19 @@ class PostManager extends Manager {
         return $db->query('SELECT COUNT(*) FROM news')->fetchColumn();
     }
 
-    public function addPost($contenu, $titre) {
+    public function addPost($auteur, $contenu, $titre, $picture) {
         $db = $this->dbConnect();
-        $q = $db->prepare('INSERT INTO news(contenu, dateAjout, titre) VALUES (?, NOW(), ?)');
-        $chapitreAjouts = $q->execute(array($contenu, $titre));
+        $q = $db->prepare('INSERT INTO news(auteur, contenu, dateAjout, titre, picture) VALUES (?, ?, NOW(), ?, ?)');
+        $chapitreAjouts = $q->execute(array($auteur, $contenu, $titre, $picture));
         return $chapitreAjouts;
     }
-
+    public function addUser($pseudo, $email, $motDePasse, $isAdmin) {
+        $db = $this->dbConnect();
+        $pass_hache = password_hash($_POST['motDePasse'], PASSWORD_DEFAULT);
+        $q = $db->prepare('INSERT INTO user(pseudo, email, motDePasse, dateRecord, isAdmin) VALUES (?, ?, ?, NOW(), ?)');
+        $userAjouts = $q->execute(array($pseudo, $email, $motDePasse, $isAdmin));
+        return $userAjouts;
+    }
     public function getNews($idNews) {
         $db = $this->dbConnect();
         $q = $db->prepare('SELECT id, auteur, titre, contenu, dateAjout FROM news WHERE id = :id');
@@ -31,8 +39,9 @@ class PostManager extends Manager {
     public function getList() {
         $db = $this->dbConnect();
         $chapitres = [];
-        $q = $db->query('SELECT id, auteur, titre, contenu, dateAjout FROM news ORDER BY id ASC');
-        $result = $q->fetchAll(PDO::FETCH_ASSOC);
+        $q = $db->query('SELECT id, auteur, titre, contenu, dateAjout FROM news ORDER BY id DESC');
+        //$result = $q->fetchAll(PDO::FETCH_ASSOC);
+        $result = $q->fetchAll(\PDO::FETCH_ASSOC);
         foreach ($result as $donnees) {
             $chapitres[] = new News($donnees);
         }
@@ -44,7 +53,7 @@ class PostManager extends Manager {
         $db = $this->dbConnect();
         $posts = [];
         $q = $db->query('SELECT id, auteur, titre, contenu, dateAjout, picture FROM news ORDER BY dateAjout ASC LIMIT 0, 3');
-        $result = $q->fetchAll(PDO::FETCH_ASSOC);
+        $result = $q->fetchAll(\PDO::FETCH_ASSOC);
         foreach ($result as $donnees) {
             $posts[] = new News($donnees);
         }
