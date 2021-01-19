@@ -1,11 +1,10 @@
 <?php
 
-//namespace tpnews5a\controller;
+namespace projet4\controller;
 
-//require 'controller/controller';
-//require 'model/PostManager.php';
-require 'model/CommentManager.php';
-//require 'view/Vue.php';
+use projet4\model\CommentManager;
+use projet4\model\PostManager;
+use projet4\model\Vue;
 
 class VoirPlusController {
     protected $postManager;
@@ -19,24 +18,25 @@ class VoirPlusController {
     public function post($idNews) {
         $post = $this->postManager->getNews($_GET['id']);
         $commentaires = $this->commentManager->getComments($_GET['id']);
-        //var_dump($post);
-        //var_dump($commentaires);
-        $vue = new Vue("VoirPlus");
+        $vue = new Vue("visiteur/VoirPlus");
         $vue->generer(array('post' => $post, 'commentaires' => $commentaires));
     }
-
+    
     public function ajoutComment($idNews) {
         $commentsAjouts = null;
+        if(isset($_POST['Commenter'])) {
         if (isset($_POST) && !empty($_POST)) {
             if (isset($_POST['authorComment']) && isset($_POST['commentaire'])) {
-                $commentsAjouts = $this->commentManager->ajouterCommentaire($idNews, $_POST['authorComment'], $_POST['commentaire']);
-                $message = 'Votre commentaire a bien été posté';
+                $commentsAjouts = $this->commentManager->ajouterCommentaire($idNews, $_POST['authorComment'], $_POST['commentaire'], $_POST['signalerComment']);
             } else {
                 $message = 'Veuillez remplir tous les champs';
             }
         }
+        $message = 'Votre commentaire a bien été posté';
+        }
         $post = $this->postManager->getNews($idNews);
-        $vue = new Vue("AddComment");
-        $vue->generer(array('post' => $post, 'commentsAjouts' => $commentsAjouts));
+        $message = 'Votre commentaire a bien été posté';
+        $vue = new Vue("visiteur/AddComment");
+        $vue->generer(array('post' => $post, 'commentsAjouts' => $commentsAjouts, 'message' => $message));
     }
 }

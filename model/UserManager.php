@@ -1,11 +1,12 @@
 <?php
-namespace App\Model;
+namespace projet4\model;
 //enregistrer un nouveau visiteur
 //savoir si visiteur déjà enregistré
 //connecter un visiteur déjà enregistré
 //require 'model/Manager.php';
 //require 'User.php';
-use App\Model\User;
+use projet4\model\User;
+use projet4\model\Manager;
 
 class UserManager extends Manager {
 

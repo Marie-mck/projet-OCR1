@@ -1,13 +1,10 @@
 <?php
-namespace App\controller;
-//require 'controller/controller';
-//require 'model/PostManager.php';
-//require 'model/CommentManager.php';
-//require 'view/Vue.php';
-use App\Model\PostManager;
-use App\Model\CommentManager;
-use App\Model\UserManager;
-use App\Model\Vue;
+namespace projet4\controller;
+
+use projet4\model\PostManager;
+use projet4\model\CommentManager;
+use projet4\model\UserManager;
+use projet4\model\Vue;
 
 class UserController {
     protected $postManager;
@@ -32,7 +29,6 @@ class UserController {
     public function afficherUser($id) {
         $getUsers =  $this->userManager->getOneUser($_GET['id']);
         $vue = new Vue("admin/AdminUpdateUser");
-        $vue->addJsFile("");
         $vue->generer(array('getUsers' => $getUsers));
     }
 
@@ -49,7 +45,6 @@ class UserController {
                 }
             }
         }
-        $vue->addJsFile("");
         header('Location: index.php?action=afficherAdminUser');
     }
 
@@ -57,7 +52,6 @@ class UserController {
         $deleteUser = $this->userManager->deleteUser($_GET['id']);
         $users = $this->userManager->getListUser();
         $vue = new Vue("admin/AdminUser");
-        $vue->addJsFile("");
         $vue->generer(array('users' => $users));
     }
 }

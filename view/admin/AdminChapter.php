@@ -8,15 +8,16 @@
 
         <table class="tableChapters">
             <thead>
-            <tr><th>Titre</th><th>Contenu</th><th>Date d'ajout</th><th>N° du chapitre</th><th>Modifier</th><th>Supprimer</th></tr>
+            <tr><th></th><th>Titre</th><th>Contenu</th><th>Date d'ajout</th><th>N° du chapitre</th><th>Modifier</th><th>Supprimer</th></tr>
             </thead>
 
             <tbody>
             <?php
                 foreach ($chapitres as $chapitre){
                     echo '<tr>
+                        <td><img id="photoChapter" width=150px src="public/images/'. $chapitre->picture(). '"/></td>
                         <td>'. $chapitre->titre(). '</td>
-                        <td>'. $chapitre->contenu(). '</td>
+                        <td>'. strip_tags(htmlspecialchars_decode($chapitre->contenu())). '</td>
                         <td>'. $chapitre->dateAjout(). '</td>
                         <td>' .$chapitre->id(). '</td>
                         <td><a href="?action=afficherAdminChapter&modifierChapterBtn&id='. $chapitre->id(). '">Modifier</a></td>

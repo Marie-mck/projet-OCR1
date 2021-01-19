@@ -1,25 +1,12 @@
 <?php
+namespace projet4;
 
 session_start();
-//define('ROOT', dirname(__DIR__));
-//echo ROOT;
-//namespace tpnews5a;
+use projet4\model\Routeur;
+require 'Autoloader.php';
+require 'model/Vue.php';
 
-require 'controller/Routeur.php';
+Autoloader::register();
 
 $routeur = new Routeur();
 $routeur->route();
-
-
-/*
-//constante contenant le dossier racine du projet
-
-define ('WEBROOT', str_replace('index.php', '', $_SERVER['SCRIPT_NAME']));
-echo ('ROOT');
-define('ROOT', str_replace('index.php', '', $_SERVER['SCRIPT_FILENAME']));
-
-//require('ROOT', 'model/Manager.php');
-//require('ROOT', 'controller/controller.php');
-
-$params = explode('/', $_GET['p']);
-print_r($params);*/

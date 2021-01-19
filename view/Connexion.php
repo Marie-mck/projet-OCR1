@@ -1,8 +1,6 @@
-<!--- page de connexion pour les visiteurs FRONTEND --->
-
 <section id="connexion">
 
-    <h3 class="connectionTitle">Connectez-vous</h3>
+    <h2 class="connectionTitle">Connectez-vous</h2>
 
     <form method="post" action="" class="container_2">
         <table class="tableConnexion">

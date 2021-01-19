@@ -1,14 +1,10 @@
 <?php
-namespace App\Controller;
-//namespace tpnews5a\controller;
-//require 'controller/controller';
-//require 'model/PostManager.php';
-//require 'model/CommentManager.php';
-//require 'view/Vue.php';
-use App\Model\PostManager;
-use App\Model\CommentManager;
-use App\Model\UserManager;
-use App\Model\Vue;
+namespace projet4\controller;
+
+use projet4\model\PostManager;
+use projet4\model\CommentManager;
+use projet4\model\UserManager;
+use projet4\model\Vue;
 
 class PostController {
     protected $postManager;
@@ -21,7 +17,7 @@ class PostController {
         $this->userManager = new UserManager();
     }
     
-// PAGE ADMIN - tableau des chapitres et tableau des commentaires sur la page modifier, approuver, supprimer un commentaire
+// PAGE ADMIN - tableau des chapitres modifier, approuver, supprimer
 
 //----------------------partie POST - CHAPITRE---------------
     
@@ -29,14 +25,13 @@ class PostController {
     public function afficherPageAdminChapter() {
         $chapitres = $this->postManager->getList();
         $vue = new Vue("admin/AdminChapter");
-        $vue->addJsFile("");
+        $vue->addJsFile("public/js/postTable.js?v=1.0");
         $vue->generer(array('chapitres' => $chapitres));
     }
 
     public function afficherChapter($id) {
         $getChapters = $this->postManager->getOneChapter($_GET['id']);
         $vue = new Vue("admin/AdminUpdateChapter");
-        $vue->addJsFile("");
         $vue->generer(array('getChapters' => $getChapters));
     }
 
@@ -46,21 +41,28 @@ class PostController {
                 $titre = htmlspecialchars($_POST['titre']);
                 $contenu = htmlspecialchars($_POST['contenu']);
                 $auteur = htmlspecialchars($_POST['auteur']);
-                $picture = htmlspecialchars($_POST['picture']);
+
+                $picture = htmlspecialchars($_FILES['picture']['name']);
                 $addChapter = $this->postManager->addPost($auteur, $contenu, $titre, $picture);
+                $uploaddir = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR;
+                $uploadfile = $uploaddir . basename($_FILES['picture']['name']);
+                //var_dump($uploadfile);
+                if (move_uploaded_file($_FILES['picture']['tmp_name'], $uploadfile)) {
+                    
+                    echo "Le fichier est valide, et a été téléchargé   avec succès. Voici plus d'informations :\n";
+                } else {
+                    echo "Attaque potentielle par téléchargement de fichiers. Voici plus d'informations :\n";
+                
+                }
             } else {
-                echo 'non'; //$erreur = "Veuillez remplir tous les champs";
                 $message = 'Veuillez remplir tous les champs';
             }
-            $message = 'Votre commentaire a bien été posté';
+            $message = 'Votre billet a bien été posté';
             $vue = new Vue("admin/AdminAddChapter");
-            $vue->addJsFile("");
             $vue->generer(array('message' => $message));
         }
         $vue = new Vue("admin/AdminAddChapter");
-        $vue->addJsFile("");
         $vue->generer(array());
-        
     }
     
     public function modifierChapter($id) {
@@ -81,7 +83,6 @@ class PostController {
     public function deleteChapter($id) {
         $deleteChapter = $this->postManager->deletePost($_GET['id']);
         $vue = new Vue("admin/AdminChapter");
-        $vue->addJsFile("");
         header('Location: index.php?action=afficherAdminChapter');
     }
 

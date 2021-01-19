@@ -1,19 +1,11 @@
 <?php
-namespace App\Model;
+namespace projet4\model;
 
-//use tpnews5a\model\Manager;
-/*require 'model/Manager.php';
-require 'News.php';*/
-use App\Model\Manager;
-use App\Model\News;
+use projet4\model\Manager;
+use projet4\model\News;
 
 class PostManager extends Manager {
-
-    public function count()  {
-        $db = $this->dbConnect();
-        return $db->query('SELECT COUNT(*) FROM news')->fetchColumn();
-    }
-
+    
     public function addPost($auteur, $contenu, $titre, $picture) {
         $db = $this->dbConnect();
         $q = $db->prepare('INSERT INTO news(auteur, contenu, dateAjout, titre, picture) VALUES (?, ?, NOW(), ?, ?)');
@@ -39,8 +31,7 @@ class PostManager extends Manager {
     public function getList() {
         $db = $this->dbConnect();
         $chapitres = [];
-        $q = $db->query('SELECT id, auteur, titre, contenu, dateAjout FROM news ORDER BY id DESC');
-        //$result = $q->fetchAll(PDO::FETCH_ASSOC);
+        $q = $db->query('SELECT id, auteur, contenu, dateAjout, titre, picture FROM news ORDER BY id DESC');
         $result = $q->fetchAll(\PDO::FETCH_ASSOC);
         foreach ($result as $donnees) {
             $chapitres[] = new News($donnees);

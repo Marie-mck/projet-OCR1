@@ -8,499 +8,846 @@ body {
     margin: 0;
     padding: 0;  
 }
-
+#contenu {
+	padding-top: 3%;
+}
+h3 {
+	text-align: center;
+	font-size: 25px;
+}
+h2 {
+	text-align: center;
+	margin-top: 75px;
+	font-size: 25px;
+}
 /* ------------------ header --------------------------------- */
 header {
     background-color: white;
 	display: flex;
     justify-content: space-between;
     width: 100%;
-    height: auto;
     position: fixed;
     z-index: 9999;
-	margin-bottom: 15px;
 	padding-top: 0;
-}
-#logo img {
-	width: 30px;
-    height:30px;
-    border: 1px solid black;
-}
-#logo {
-    align-self: center;
-    background-color: white;
-    display: flex;
-    justify-content: space-between;
-    padding-left: 7%;
 }
 .myName {
     font-size: 25px;
     color: #29414d;
-    margin-right: 25px;
+    padding-left: 3%;
     font-weight: bold;
+}
+.headNav {
+	display: flex;
 }
 .menu {
 	padding-right: 1%;
 }
 nav ul {
     list-style-type: none;
-    display: flex;
-}
-nav li {
-    padding: 3px 15px;
+	display: flex;
+	align-items: center;
 }
 nav a {
     font-size:18px;
     color: #29414d;
-    text-decoration: none;
+	text-decoration: none;
+	padding: 5px;
+}
+nav li {
+	margin-right: 45px;
 }
 nav a:hover {
-    background-color: #A9A9A9;
-    padding: 3%;
+    border-bottom: 2px solid rgb(111, 111, 204);
 }
-#connexion_Btn, #deconnexion_Btn {
-    background-color: #A9A9A9;
-    padding: 5px 12px;
-    border-radius: 5%;
-    font-size: 17px;
-    margin-right: 12px;
-}
-.menu input.burger /*Menu hamburger*/
-{
+nav ul li ul {
 	display: none;
 }
+.subMenuNav {
+	margin: 0;
+	white-space: nowrap;
+	line-height: 28px;
+}
+.subMenuNav ul{
+	display: none;
+	margin: 0;
+	padding: 0;
+	border-radius: 0 0 .25rem .25rem;
+}
+.subMenuNav li {
+	display: block;
+	margin: 0;
+	padding: 0;
+	height: 28px;
+}
+nav ul li:hover ul { /* Affiche la dropNav au survol de la souris avec la class .drop */
+	z-index:99999;
+	position:absolute;
+	margin-top:5px;
+	margin-left:-5px;
+}
+.adminLink {
+	margin: 0;
+	padding: 0;
+	margin-right: 20px;
+}
+.menu input.burger {
+	display: none;
+}
+.navBtn {
+	display: flex;
+	padding: 10px;
+}
 
-/* ------------------chapters--------------------- */
+/* ------------------ACCUEIL chapters--------------------- */
 
 #introduction {
     background-color: rgb(239, 240, 242);
 	text-align: center;
-	padding-top: 7%;
+}
+#lastChaptersTitle {
+	text-align: center;
+	font-size: 30px;
+	font-weight: bold;
+	padding-top: 2%;
+	text-transform: uppercase;
 }
 .image {
     position: relative;
-    width: 80%;
-    height:450px;
-    padding-top: 7%;
+    width: 100%;
+	height:450px;
+	margin-bottom: 30px;
 }
 .text {
     position: absolute;
     font-size: 30px;
     text-align: center;
-    padding-top: 18%;
+    padding-top: 12%;
     left: 0;
     width: 100%;
     color: black;
 }
 .text2 {
 	text-align: center;
-	border:3px solid #435962;
 	font-size: 20px;
-	width: 80%;
-	margin: 3% 0% 0% 10%;
+	margin: auto;
 	height: 100px;
+}
+.administration {
+	padding-left: 2%;
 }
 .presentation {
 	margin: 0;
+	margin-bottom: 1%;
+	text-transform: uppercase;
+	font-size: 20px;
+	font-weight: bold;
 }
-#last_chapter {
-    margin: auto;
-    width: 75%;
-}
-.chapter_1, .chapter_2, .chapter_3 {
-	width: 80%;
+.textPresentation {
 	margin: 0;
 }
-.last_chapter_1, .last_chapter_2, .last_chapter_3 {
+.lastDoc {
+	margin: 1%;
+	margin-bottom: 20px;
 	display: flex;
-	justify-content: center;
-	margin-bottom: 2%;
-	width: 100%
-}
-.last_chapter_1_image, .last_chapter_2_image,.last_chapter_3_image {
-	margin: 0;
-}
-.chapter_title, .chapter_text, .chapter_readmore {
-    border: 1px solid #435962;
-    padding-left: 2%;
-}
-.title_last_chapter {
-    text-align: center;
-    font-size: 35px;
-}
-.chapter_title {
-    background-color: #435962;
-    color: white;
-    font-size: 18px;
-}
-.chapter_text {
-    background-color: white;
-    height: 173px;
-}
-.chapter_readmore {
-    background-color: #D3D3D3;
-}
-.image_chapter {
-	height:300px;
-}
-
-
-/*----------------------- page à propos -----------------*/
-#author_pres {
-    border:3px solid rgb(92, 173, 211);
-    text-align: center;
-    width: 80%;
-    margin: 3% 10%;
-}
-
-/*----------------------- footer -----------------*/
-#foot {
-	position: absolute;
-	width: 100%;
-	height: 100px;
+	flex-direction: column;
 	background-color: white;
 }
+.lastDoc img {
+	width: 100%;
+}
+.last3Doc {
+	display: flex;
+	justify-content: space-between;
+	width: 80%;
+	margin: auto;
+	margin-bottom: 5%;
+}
+.titleDoc, .textDoc, .readmore {
+	margin: 0;
+	padding: 1%
+}
+.titleDoc {
+	border-bottom: 2px solid #33586e;
+}
+.pres, .picture {
+	text-align: center;
+}
+.readmoreDoc p, .read {
+	margin: 0;
+	padding: 5%;
+	background-color: #33586e;
+	color: white;
+}
 
-/*----------------------- page de connexion -----------------*/
-form {
+/*----------------------- page Chapter -----------------*/
+.allChapters {
+	width: 50%;
+	margin: auto;
+	display: flex;
+	justify-content: space-around;
+	margin-bottom: 2%;
+}
+.allChapterstitleDoc, .allChapterstextDoc {
+	margin: 0;
+	padding: 1% 3%;
+}
+.allChapterstitleDoc {
+	border-bottom: 2px solid #33586e;
+}
+.allChapterspicture {
+	text-align: center;
+	width: 100%;
+	border: 1px solid black;
+}
+.allChapterstextDoc {
+	border: 1px solid black;
+	height: 200px;
+}
+.allChapterstitleDoc {
+    background-color: #435962;
+    color: white;
+	font-size: 18px;
+}
+.allChaptersreadmoreDoc p {
+	margin: 0;
+	padding: 2% 3%;
+	background-color: #33586e;
+}
+.allChaptersreadmoreDoc a {
+	color: white;
+}
+#modifChapterTitle, .pageAdminTitle, .updateCommentTitle, .addChapterTitle, #allChaptersTitle {
+	margin-top: 115px;
+}
+
+/*----------------------- page Admin ajout Chapter -----------------*/
+
+.addChapter {
+	height: 425px;
+	width: 80%;
+	margin: auto;
+	margin-bottom: 12%;
+}
+#mytextarea {
+	height: 300px;
+	width: 100%;
+	margin: auto;
+	margin-bottom: 1%;
+	margin-top: 35px;
+}
+.addChapterBtn {
+	margin-bottom: 2%;
+	margin-top: 2%;
+}
+#titre {
+	margin-bottom: 30px;
+}
+#picture {
+	margin-top: 2%;
+}
+/*----------------------- page Voir plus -----------------*/
+
+.voirPlusChapter {
+	width: 60%;
+	margin: auto;
+	height: auto;
+	text-align: justify;
+}
+#commentList {
+	margin-bottom: 5%;
+	padding: 2% 5%;
+	background-color: #c0c7c7;
+}
+.containerComment {
+	display: flex;
+	flex-direction: column;
+	border: thick double #33586e;
+	margin: 12px 0px;
+}
+.containerComment p {
+	padding: 10px 30px;
+	margin: 0;
+}
+.addCommentBtn {
+	font-size: 25px;
+	text-align: center;
+	border: 2px solid #33586e;
+	width: 25%;
+	background-color: #33586e;
+	padding: 10px;
+	color: white;
+	margin-top: 20px;
+}
+.addCommentLink {
+	text-align: center;
+	margin: 40px 0px;
+}
+.newsdisplay {
+	padding: 2% 5%;
+	color: #33586e;
+	text-align: justify;
+}
+.authorTitle, .titleCommentList {
+	font-size: 20px;
+}
+a {
+	text-decoration: none;
+}
+.chapterAccessList {
+	margin-left: 2%;
+}
+.signalerBouton {
+	font-size: 15px;
+	text-align: center;
+	border: 2px solid #33586e;
+	width: 35%;
+	background-color: #33586e;
+	padding: 10px;
+	color: white;
+	margin: 1% 60%;
+}
+#signalerBouton a {
+	color: white;
+}
+
+/*----------------------- page ajouter comment -----------------*/
+
+.addCommentPage {
+	width: 60%;
+	margin: auto;
+	height: auto;
+	text-align: justify;
+}
+.addCommentTitle {
+	text-align: center;
+	font-weight: bold;
+	text-transform: uppercase;
+	padding-left: 2%;
+}
+.addCommentForm {
+	margin: 3% 18%;
+	width: auto;
+}
+#authorComment, #commentaire {
+	margin-bottom: 10px;
+	width: 100%;
+}
+#commentaire {
+	height: 200px;
+}
+.commentBtn{
+	background-color: #33586e;
+    color: #fff;
+    padding: 10px;
+    border: transparent;
+    border-radius: 6px 6px 6px 6px;
+    text-transform: uppercase;
+	cursor: pointer;
+	margin-bottom: 15%;
+}
+
+/*----------------------- page Admi Comment (update, delete) -----------------*/
+#adminPageInfo, #adminPageUser {
+	margin: auto;
+	width: 80%;
+	margin-bottom: 13%;
+}
+.tableChapters, .tableComments, .tableUsers, .tableCommentsSignales {
+	margin: auto;
+}
+th {
+	background-color: #33586e;
+	font-size: 20px;
+}
+th, td {
+	font-size: 14px;
+	border: 1px solid black;
+	text-align: center;
+	padding: 25px;
+	color: black;
+	max-width: 300px;
+	
+}
+.tableUsers th td {
+	word-break: break-all;
+}
+.chapter {
+	width: 50%;
+}
+.modifCommentForm td {
+	border: none;
+}
+.modifCommentForm td label {
+	font-weight: bold;
+	font-size: 18px;
+	text-transform: uppercase;
+	width: 10%;
+}
+#commentColumnSize {
+	width: 53%;
+}
+.formCommentCommentaire {
+	height: 300px;
+}
+.formCommentAuthor, .formCommentCommentaire, .formCommentId {
+	width: 100%;
+}
+
+.backCommentLink {
+	margin-bottom: 10%;
+}
+
+/*----------------------- page connexion -----------------*/
+#connexion, #inscription {
+	background-color: white;
+	width: 80%;
+	margin: 12% auto;
+	
+}
+.tableConnexion, .tableInscription {
+	margin: auto;
+	border: none;
+	border-collapse: collapse;
+	width: 100%;
+}
+.tableConnexion td, .tableInscription td {
+	border: none;
+}
+.tableConnexion tr {
+	padding-bottom: 10px;
+}
+.connectionTitle, .inscriptionTitle {
+	padding-top: 20px;
+	font-size: 30px;
+	text-align: center;
+	text-transform: uppercase;
+	margin: 60px 0px;
+}
+#pseudo, #motDePasse, #email {
+	border: none;
+	font-size: 18px;
+	border-bottom: 1px solid rgb(49, 44, 44);
+	width: 90%;
+}
+#inscriptionBtn, #deconnexion_Btn, #connexion_Btn, #connexionBtn, .inscription_Btn, #inscription_Btn, .welcome_Btn, .addChapterBtn, .formCommentBtn, .changeChapterBtn {
+    font-size: 18px;
+    text-align: center;
+	border: 2px solid #33586e;
+	border-radius: 6px 6px 6px 6px;
+    background-color: #33586e;
+    padding: 10px;
+	color: white;
+	white-space: nowrap;
+	margin-right: 2%;
+}
+.dropMenu {
+	display: none;
+	background-color: white;
+}
+.connectionPageBtn {
+	text-align: center;
+}
+.inscriptionBtn, .deconnexionBtn, .connexionBtn {
+	color: white;
+}
+.sup {
+	color: black;
+}
+#errorConnexion, #message {
+	width: 60%;
+	border: none;
+	font-size: 18px;
+	color: red;
+	background-color: rgb(239, 240, 242);;
+}
+/*----------------------- page inscription -----------------*/
+
+#identifiant, #email, #motDePasse {
+	border: none;
+	font-size: 18px;
+	border-bottom: 1px solid black;
+	width: 90%;
+}
+#identifiantLabel, #emailLabel, #motDePasseLabel {
+	border: none;
+	font-size: 18px;
+	width: 90%;
+}
+/*----------------------- User -----------------*/
+.addCommentPage, .modifUserForm {
+	word-wrap: break-word;
+	margin: auto;
+}
+/*----------------------- footer -----------------*/
+#footer {
+	width: 100%;
+	background-color: white;
+	bottom: 0;
+	
+}
+.footerContainer {
+	display: flex;
+	justify-content: space-around;
+	padding: 20px 0px;
+	color: #33586e;
+	font-size: 18px;
+	font-weight: bold;
+	font-family: 'comfortaa', cursive;
+}
+.pagesLinkFooter {
+	display: flex;
+	justify-content: space-around;
+	color: #33586e;
+	font-family: 'calibri';
+}
+.footerContainer a {
+    font-size:15px;
+    color: #29414d;
+    text-decoration: none;
+}
+.footerContainer a:hover {
+    background-color: #A9A9A9;
+    padding: 3%;
+}
+.footerContainer ul {
+    list-style-type: none;
 	display: flex;
 	flex-direction: column;
 }
-#connexion {
-    border:3px solid rgb(92, 173, 211);
-    width: 50%;
-    margin: 2% 10%;
-}
-form {
-    width: 40%;
-    margin: 3% 10%;
-}
-#identifiant, #password {
-    margin-bottom: 3%;
-}
-#connexion_Open {
-	width: 130px;
-	height: 32px;
-	margin-left: 20px;
-	color: white;
-	background-color: #435962;
-	border:none;
-	border-radius: 3px;
-    box-shadow: 0px 2px #29414d;
-    font-size: 15px;
-}
-#connexion_Open:hover {
-    background-color: #49839f;
-    border-bottom: 2px solid rgb(70, 140, 171);
-    font-size: 18px;
-}
-.identifiant, .password {
-    font-size: 18px;
+.footerCopy {
+	text-align: center;
 }
 
-
-
-	@media all and (min-width: 1024px) and (max-width: 1124px)/*ecran tablette*/
-	{
-		.text
-		{
-		   padding-top:6%;
-		   left: 7%;
-		   width: 70%;
-		   font-size: 20px;
+	/*ecran tablette*/
+	@media all and (min-width: 1024px) and (max-width: 1124px) {
+		.text {
+			padding-top:6%;
+			font-size: 30px;
 		}
-
-	}
-	@media all and (min-width: 769px) and (max-width: 1024px)/*ecran tablette*/
-	{
-		.text
-		{
-		   padding-top:2%;
-		   left: 3%;
-		   width: 50%;
-		   font-size: 25px;
-		   margin: 0px auto;
+		tbody {
+			margin: 2%;
 		}
-		#carrousel .prev, #carrousel .next, .bar, .fa-chevron-left, .fa-chevron-right
-		{
+		.last3Doc {
+			display: block;
+		}
+		.table, thead, tbody, tr, th, td {
+			display: block;
+			word-wrap: break-word;
+			
+			max-width: 100%;
+		}
+		.tableCommentsSignales, .tableComments, .tableUsers, .tableChapters, .updateUser, .modifCommentForm, .modifUserForm {
+			word-wrap: break-word;
+			
+			table-layout: fixed;
+			width: 100%;
+		}
+		.tableCommentsSignales td, .tableComments td, .tableUsers td, .tableChapters td, .updateUser td, .modifCommentForm td, .modifUserForm td {
+			min-width: 200px;
+			padding-left: 15%;
+			position: relative;
+			word-wrap: break-word;
+		}
+		.tableCommentsSignales td::before, .tableComments td::before, .tableUsers td::before, .tableChapters td::before, .updateUser td::before, .modifCommentForm td::before, .modifUserForm td::before {
+			padding: 8px;
+			content: attr(data-label);
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 26%;
+			bottom: 0;
+			background-color: gray;
+			align-items: center;
+		}
+		tr {
+			margin-bottom: 1rem;
+		}
+		thead {
 			display: none;
 		}
-		.web, h1, .accueil
-		{
-			font-size: 25px;
-			margin:0;
+		.tableConnexion td, .tableInscription td {
+			padding: 0;
 		}
-		.services
-		{
-			display: flex;
-			flex-direction: column;
+		.modifCommentForm td::before {
+			background-color: rgb(239, 240, 242);
 		}
-		.site_1 img /*2nd section-Nos projets - portfolio d'images*/
-		{
-			width: 100%;
-			margin: 0;
+		#modifChapterTitle {
+			margin-top: 115px;
 		}
-		figure
-		{
-			width: 28%;
-		}
-		.fa-eye
-		{
-		 font-size: 12px;
-		 padding: 11px;
-		}
-		h4, p, .presentation
-		{
-			font-size: 15px;
-		}
-		footer
-		{
+	}
+	/*ecran tablette*/
+	@media all and (min-width: 769px) and (max-width: 1024px) {
 
-		  width: 100%;
-   		  display: flex;
-  		  flex-direction: column-reverse;
+		h1 {
+			width: 60%;
+			margin: auto;
 		}
-		.container_3
-		{
-		  width: auto;
-		  margin: 0px 0px auto;
-		  position: static;
-		  right: 0;
+		.last3Doc {
+			display: block;
 		}
-		#contact
-		{
-			padding-top: 100px;
+		.table, thead, tbody, tr, th, td {
+			display: block;
+			max-width: 100%;
 		}
-		.pied
-		{
-		  position: relative;
-		  width: auto;
-		  margin: 0px 0px auto;
+		.tableCommentsSignales, .tableComments, .tableUsers, .tableChapters, .updateUser {
+			word-wrap: break-word;
+			
+			table-layout: fixed;
+			width: 100%;
 		}
-		#overlay
-		{
-			height: 100%;
+		.tableCommentsSignales td, .tableComments td, .tableUsers td, .tableChapters td {
+			min-width: 200px;
+			padding-left: 15%;
+			position: relative;
+			word-wrap: break-word;
 		}
-		#message
-		{
-			width: auto;
+		.tableCommentsSignales td::before, .tableComments td::before, .tableUsers td::before, .tableChapters td::before {
+			padding: 8px;
+			content: attr(data-label);
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 26%;
+			bottom: 0;
+			background-color: gray;
+			align-items: center;
+		}
+		tr {
+			margin-bottom: 1rem;
+		}
+		thead {
+			display: none;
+		}
+		.tableConnexion td, .tableInscription td {
+			padding: 0;
+		}
+		.modifCommentForm td::before {
+			background-color: rgb(239, 240, 242);
+		}
+		
+		footer {
+			width: 100%;
+			display: flex;
+			flex-direction: column-reverse;
 		}
 	}
 
-	@media all and (max-width: 768px) /*ecran smart*/
-	{
-		header
-		{
+/*-----------------ecran smart-----------------*/
+
+	@media all and (max-width: 768px) {
+
+		#contenu {
+			padding-top: 8%;
+		}
+		/*------------header---------*/
+		header {
 			padding: 10px 0px 10px 0px;
 			display: block;
 			height: 40px;
 		}
-		#logo img
-		{
-			width: 170px;
-			height: 42px;
-			padding-left: 25px;
+		.menu {
+			width: 100%;
 		}
-		nav ul
-		{
-		  display: block;
-		  line-height:2.2;
-		  width: 90%;
-		  padding: 0px 20px;
-		}
-		.menu nav
-		{
-		  background-color: white;
-		  overflow: hidden; /*cache le menu qd pas ouvert*/
-		  height:0;
-		 }
-		 nav li
-		 {
-		 	padding: 2px 40px;
-		 }
-	/*Menu buger*/
-		.menu input.burger
-		{
+		.headNav {
 			display: block;
-			vertical-align:text-bottom;
 		}
-		.menu .burger
-		{
-		  -webkit-appearance:none; /*apparence du menu */
-		  cursor:pointer;
-		  font-size:26px;
-		  line-height:40px;
-		  position:absolute;
-		  top:6px;
-		  right:20px;
+		.adminLink {
+			margin: 0;
+			padding: 0;
 		}
-		.menu .burger:before
-		{
-		  content:'\f0c9';
-		  font-weight: 900;
-		  font-family: "Font Awesome 5 Free";
-		}
-		.menu .burger:checked:before
-		{
-		  content:'\f00d';
-		  font-weight: 900;
-		  font-family: "Font Awesome 5 Free";
-		}
-		.menu .burger:checked + nav
-		{
-		  height:calc(28vh - 60px);
-		}
-
-/* ------------------- bannière ------------------*/
-		#carrousel /* Bannière */
-		{
-		    height:250px;
-		    background-image: url(images/slider/cta2-bg.jpg);
-		    width: 100%;
-		    margin: auto;
-		    display: flex;
-		    flex-direction: column;
-		}
-		#carrousel img, #carrousel .prev, #carrousel .next, .bar, .fa-chevron-left, .fa-chevron-right
-		{
-			display: none;
-		}
-		.text
-		{
-		   padding-top:2%;
-		   left: 0;
-		   text-align: center;
-		   width: 100%
-		}
-		.web, .text, h1 /*Bannière titre*/
-		{
-			font-size: 25px;
-			line-height: 28px;
-		}
-		.explication, .info, .para/*Bannière paragraphe*/
-		{
-			font-size: 14px;
-			margin-bottom: 15px;
-		}
-		.info
-		{
-			padding: 10px 12px;
-			position: initial;
-		}
-		
-	/*-----------1ere et 2nd section-----------------*/
-		.fa-circle /*1ere et 2nd section*/
-		{
-			box-shadow: 0px 0px 6px 3px white;
-		}
-		.box:before /*1ere et 2nd section*/
-		{
-			width: 25px;
-			margin-left: -32px;
-		}
-		.box:after /*1ere et 2nd section*/
-		{
-			width: 25px;
-			margin-left: 5px;
-		}
-		.services
-		{
+		nav ul {
 			display: flex;
 			flex-direction: column;
+			line-height: 1.5;
+			width: 55%;
+			padding: 0px 20px;
 		}
-		.service
-		{
-			font-size: 12px;
+		.menu nav {
+			background-color: white;
+			overflow: hidden; /*cache le menu qd pas ouvert*/
+			height:0;
 		}
-		.icone_2 i
-		{
+		nav li {
+			padding: 2px 40px;
+		}
+		nav a {
+			border-bottom: 1px solid #f4f2f1;
+			display: block;
+			padding: 12px 40px 12px 15px;
 			font-size: 17px;
+			font-weight: 400;
 		}
-		.icone_2 i:after
-		{
-		    left: 150%; /* deplacer à gauche par rapport au cercle*/
-		    margin-top: -18px;/* deplacer vers le haut */
-		   	font-size: 8px; /* taille du rond */
-		 	border: 6px solid white; /* adds a gap to the left and right */
-		 }
-		.conteneur_3 .icone_2, .conteneur_1 .icone_2, .conteneur_2 .icone_2
-		{
-			width: 35px;
-			height: 35px;
-			padding:17px 0px 0px 18px;
-			margin-top: 20px;
+		.navBtn {
+			display: flex;
+			flex-direction: column;
+			width: 300px;
 		}
-		p, h4, .presentation
-		{
-			font-size: 17px;
+		.subMenuNav ul {
+			padding-top: 15px;
+		}
+		nav ul li ul {
+			display: block;
+		}
+		.subMenuNav {
+			position: static;
 			margin: 0;
+			white-space: nowrap;
+			line-height: 28px;
 		}
-		.site
-		{
-			margin: 0px 30px auto;
+		.subMenuNav ul{
+			display: block;
+			position: static;
+			margin: 0;
+			padding: 0;
+			margin-left: 15px;
+			border-radius: 0 0 .25rem .25rem;
 		}
-		.texte
-		{
-			font-size: 11px;
-			padding-left: 85px;
+		.subMenuNav li {
+			display: block;
+			margin: 0;
+			padding: 0;
+			height: 28px;
 		}
-		#projets /*2nd section-Nos projets*/
-		{
-		   padding-top: 10px;
+		.subMenuNav:hover ul { /* Affiche la dropNav au survol de la souris avec la class .drop */
+			display: list-item !important;
+			position: static;
+			margin-top: 15px;
 		}
-		.projet a /*2nd section-Nos projets - icones navigation*/
-		{
-			font-size: 11px;
+		h1 {
+			width: 60%;
+			margin: auto;
 		}
-		.site_1 img /*2nd section-Nos projets - portfolio d'images*/
-		{
+		
+		/*------------Menu buger---------*/
+		
+		header {
+			display: block;
+			height: 55px;
+		}
+		.menu input.burger {
+			display: block;
+		}
+		.menu .burger {
+			-webkit-appearance: none; /*apparence du menu */
+			cursor: pointer;
+			font-size: 26px;
+			line-height: 40px;
+			position: absolute;
+			top: 6px;
+			right: 20px;
+		}
+		.menu .burger::before {
+			content:'\f0c9';
+			font-weight: 900;
+			font-family: "Font Awesome 5 Free";
+		}
+		.menu .burger:checked:before {
+			content:'\f00d';
+			font-weight: 900;
+			font-family: "Font Awesome 5 Free";
+		}
+		.menu .burger:checked + nav {
+			height: calc(100vh - 60px);
+		}
+
+		/*------------Connexion / Deconnexion---------*/
+		.connexionBtn, .deconnexionBtn, .welcome_Btn, #deconnexion_Btn {
+			margin: 2px 12px;
+			font-size: 17px;
+		}
+		.deconnexionBtn {
+			padding: 0;
+			border-bottom: none;
+		}
+		#connexionBtn {
+			margin-bottom: 20px;
+		}
+		#connexion {
+			margin: 32% auto;
+		}
+		/*------------Accueil---------*/
+		.last3Doc {
+			display: block;
+		}
+
+		/*------------Voir plus---------*/
+		
+		.signalerBouton {
+			width: 85%;
+			margin: 1% 8%;
+		}
+		#signalerBouton {
 			width: 100%;
+			margin: 0%;
+		}
+		.voirPlusChapter {
+			width: 75%;
+		}
+		.addCommentBtn {
+			font-size: 18px;
+		}
+		.addChapterBtn, .changeChapterBtn {
+			margin: 2px 12px;
+			font-size: 17px;
+		}
+
+		/*------------Ajouter comment---------*/
+		.addCommentPage, .modifUserForm {
+			
+			margin: auto;
+		}
+		#commentaire, #authorComment {
+			width: 100%;
+		}
+		.addCommentForm {
 			margin: 0;
-		}
-		h4, .presentation
-		{
-			padding: 0px 0px 10px 10px;
-		}
-		figure {
-		    padding: 0px 0px 10px 0px;
-		    width: 80%;
-		}
-		figcaption
-		{
-		  width: 100%;
-		  margin: 10px 0px 11px 0px;
-		  line-height: 15px;
-		}
-		.fa-eye
-		{
-		  margin-left: 80%;
-		}
-		footer
-		{
-		  width: 100%;
-   		  display: flex;
-  		  flex-direction: column-reverse;
-		}
-		.container_3
-		{
-		  width: auto;
-		  margin: 0px 0px auto;
-		  position: static;
-		  right: 0;
-		}
-		.pied
-		{
-		  position: relative;
-		  width: auto;
-		  margin: 0px 0px auto;
-		}
-		#overlay
-		{
-			height: 100%;
-		}
-		#message
-		{
-			height: 100Px;
 			width: auto;
+		}
+		.table, thead, tbody, tr, th, td {
+			display: block;
+			max-width: 100%;
+		}
+		.tableCommentsSignales, .tableComments, .tableUsers {
+			word-wrap: break-word;
+			
+			table-layout: fixed;
+			width: 100%;
+		}
+		.tableCommentsSignales td, .tableComments td, .tableUsers td {
+			min-width: 200px;
+			padding-left: 15%;
+			position: relative;
+			word-wrap: break-word;
+		}
+		.tableCommentsSignales td::before, .tableComments td::before, .tableUsers td::before {
+			padding: 8px;
+			content: attr(data-label);
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 26%;
+			bottom: 0;
+			background-color: gray;
+			align-items: center;
+		}
+		tr {
+			margin-bottom: 1rem;
+		}
+		thead {
+			display: none;
+		}
+		.tableConnexion td, .tableInscription td {
+			padding: 0;
+		}
+		.modifCommentForm td::before {
+			background-color: rgb(239, 240, 242);
+		}
+		.addChapter input {
+			margin-bottom: 25px;
+		}
+		#errorConnexion {
+			width: 300px;
+			font-weight: bold;
+			color: red;
 		}
 }
